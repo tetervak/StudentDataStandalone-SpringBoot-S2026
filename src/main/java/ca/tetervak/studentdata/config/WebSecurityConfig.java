@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 
 import javax.sql.DataSource;
@@ -20,20 +19,20 @@ import javax.sql.DataSource;
 @EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
 
-    DataSource dataSource;
+    private final DataSource dataSource;
 
-    WebSecurityConfig(
+    public WebSecurityConfig(
             UserDetailsService userDetailsService,
             AuthenticationManagerBuilder auth,
-            DataSource dataSource,
-            PasswordEncoder passwordEncoder
+            PasswordEncoder passwordEncoder,
+            DataSource dataSource
     ) throws Exception {
-        this.dataSource = dataSource;
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        this.dataSource = dataSource;
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, PersistentTokenRepository persistentTokenRepository) throws Exception {
 
         // remove "h2-console" from the program in production
         httpSecurity.authorizeHttpRequests(
@@ -60,7 +59,7 @@ public class WebSecurityConfig {
 
         httpSecurity.logout(
                 (logout) -> logout
-                        .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                        .logoutUrl("/logout")
                         .logoutSuccessUrl("/index")
                         .deleteCookies("remember-me")
                         .permitAll()
@@ -69,17 +68,18 @@ public class WebSecurityConfig {
         httpSecurity.rememberMe(
                 (remember) -> remember
                         .rememberMeCookieName("remember-me")
-                        .tokenRepository(persistentTokenRepository())
+                        .tokenRepository(persistentTokenRepository)
                         .tokenValiditySeconds(24 * 60 * 60)
         );
 
         return httpSecurity.build();
     }
 
-    private PersistentTokenRepository persistentTokenRepository() {
-        JdbcTokenRepositoryImpl tokenRepositoryImpl = new JdbcTokenRepositoryImpl();
-        tokenRepositoryImpl.setDataSource(dataSource);
-        return tokenRepositoryImpl;
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
     }
 
     @Bean
