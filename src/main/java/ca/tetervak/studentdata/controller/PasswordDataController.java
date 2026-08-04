@@ -45,6 +45,7 @@ public class PasswordDataController {
             BindingResult result) {
         log.trace("updatePassword() is called");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        assert authentication != null;
         String login = authentication.getName();
 
         if (!result.hasFieldErrors("currentPassword")) {

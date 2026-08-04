@@ -67,9 +67,9 @@ public class UserDataController {
             Model model
     ) {
         log.trace("insertUser() is called");
-        log.debug("login = " + login);
-        log.debug("password = " + login);
-        log.debug("role = " + role);
+        log.debug("login = {}", login);
+        log.debug("password = {}", login);
+        log.debug("role = {}", role);
         String message;
         if (login == null || login.trim().isEmpty()) {
             log.trace("missing login input");
@@ -84,15 +84,15 @@ public class UserDataController {
             login = login.trim();
             password = password.trim();
             loginDataService.insertUser(login, password);
-            log.trace("added user " + login);
+            log.trace("added user {}", login);
             model.addAttribute("login",login);
             if(role != null && role.equals("admin")){
                 loginDataService.insertRole(login, "ROLE_ADMIN");
-                log.trace("added ROLE_ADMIN to " + login);
+                log.trace("added ROLE_ADMIN to {}", login);
                 model.addAttribute("role","admin");
             }else{
                 loginDataService.insertRole(login, "ROLE_USER");
-                log.trace("added ROLE_USER to " + login);
+                log.trace("added ROLE_USER to {}", login);
                 model.addAttribute("role","user");
             }
             return "UserAdded";
@@ -106,7 +106,7 @@ public class UserDataController {
     @GetMapping("/delete-user")
     public String deleteUser(@RequestParam String login, Model model) {
         log.trace("deleteUser() is called");
-        log.debug("login = " + login);
+        log.debug("deleteUser: login = {}", login);
         model.addAttribute("user", login);
         return "DeleteUser";
     }

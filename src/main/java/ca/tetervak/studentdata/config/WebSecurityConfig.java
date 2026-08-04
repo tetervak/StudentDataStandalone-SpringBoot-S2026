@@ -47,7 +47,7 @@ public class WebSecurityConfig {
         );
 
         // this line is necessary for h2-console, it reduces security
-        httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        //httpSecurity.csrf(AbstractHttpConfigurer::disable);
 
         httpSecurity.formLogin(
                         (login) -> login

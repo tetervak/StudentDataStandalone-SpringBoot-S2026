@@ -1,17 +1,18 @@
 package ca.tetervak.studentdata.passwords;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 public class PasswordChangeValidator implements Validator {
 
     @Override
-    public boolean supports(Class<?> type) {
+    public boolean supports(@NonNull Class<?> type) {
         return PasswordChangeForm.class.isAssignableFrom(type);
     }
 
     @Override
-    public void validate(Object object, Errors errors) {
+    public void validate(@NonNull Object object, @NonNull Errors errors) {
 
         PasswordChangeForm form = (PasswordChangeForm) object;
 

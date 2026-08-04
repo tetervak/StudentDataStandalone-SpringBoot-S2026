@@ -1,5 +1,6 @@
 package ca.tetervak.studentdata.service;
 
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,14 +28,15 @@ public class AppUserDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+    @NonNull
+    public UserDetails loadUserByUsername(@NonNull String login) throws UsernameNotFoundException {
         logger.trace("loadUserByUsername() is called");
         if(loginDataService.userExists(login)){
-            logger.trace("user " + login + " is found");
+            logger.trace("user {} is found", login);
             String password = loginDataService.getPassword(login);
             return new User(login, password, getAuthorities(login));
         }else{
-            logger.trace("user " + login + " is not found");
+            logger.trace("user {} is not found", login);
             throw new UsernameNotFoundException("Login " + login + " is not found");
         }
     }
@@ -43,8 +45,7 @@ public class AppUserDetailsService implements UserDetailsService {
         logger.trace("getAuthorities() is called");
         List<String> listOfRoles = loginDataService.getAllRoleNames(login);
         String[] arrayOfRoles = listOfRoles.toArray(new String[0]);
-        logger.trace("roles for login=" +
-                login + ":[" + String.join(",", arrayOfRoles) + "]");
+        logger.trace("roles for login={}:[{}]", login, String.join(",", arrayOfRoles));
         return AuthorityUtils.createAuthorityList(arrayOfRoles);
     }
 
