@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -26,13 +25,13 @@ public class WebSecurityConfig {
             AuthenticationManagerBuilder auth,
             PasswordEncoder passwordEncoder,
             DataSource dataSource
-    ) throws Exception {
+    ) {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
         this.dataSource = dataSource;
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, PersistentTokenRepository persistentTokenRepository) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, PersistentTokenRepository persistentTokenRepository){
 
         // remove "h2-console" from the program in production
         httpSecurity.authorizeHttpRequests(

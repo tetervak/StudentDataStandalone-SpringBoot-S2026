@@ -39,6 +39,7 @@ public class UserDataController {
     public String listUsers(Model model) {
         log.trace("listUsers() is called");
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        assert authentication != null;
         model.addAttribute("you", authentication.getName());
         model.addAttribute("users",
                 loginDataService.getAllUserNames("ROLE_USER"));
