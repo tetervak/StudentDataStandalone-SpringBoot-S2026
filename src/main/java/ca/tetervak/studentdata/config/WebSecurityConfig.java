@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -32,8 +33,15 @@ public class WebSecurityConfig {
                         .authenticated()
         );
 
-        // this line is necessary for h2-console, it reduces security
-        //httpSecurity.csrf(AbstractHttpConfigurer::disable);
+        // 1. Ignore CSRF protection specifically for the H2 console path
+        httpSecurity.csrf(csrf -> csrf
+                .ignoringRequestMatchers("/h2-console/**")
+        );
+
+        // 2. Allow same-origin frames so the H2 console UI can load its inner frames
+        httpSecurity.headers(headers -> headers
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+        );
 
         httpSecurity.formLogin(
                         (login) -> login
