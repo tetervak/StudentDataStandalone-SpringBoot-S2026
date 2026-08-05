@@ -1,5 +1,6 @@
 package ca.tetervak.studentdata.config;
 
+import javax.sql.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -12,23 +13,9 @@ import org.springframework.security.web.authentication.rememberme.JdbcTokenRepos
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.thymeleaf.extras.springsecurity6.dialect.SpringSecurityDialect;
 
-import javax.sql.DataSource;
-
 @Configuration
 @EnableMethodSecurity(securedEnabled = true)
 public class WebSecurityConfig {
-
-    private final DataSource dataSource;
-
-    public WebSecurityConfig(
-            UserDetailsService userDetailsService,
-            AuthenticationManagerBuilder auth,
-            PasswordEncoder passwordEncoder,
-            DataSource dataSource
-    ) {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-        this.dataSource = dataSource;
-    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity, PersistentTokenRepository persistentTokenRepository){
@@ -75,7 +62,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public PersistentTokenRepository persistentTokenRepository() {
+    public PersistentTokenRepository persistentTokenRepository(DataSource dataSource) {
         JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
         tokenRepository.setDataSource(dataSource);
         return tokenRepository;
