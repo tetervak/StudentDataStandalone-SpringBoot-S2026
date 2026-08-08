@@ -7,11 +7,11 @@
     <link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
-    <title>User Added</title>
+    <title>Users</title>
 </head>
 <body>
 <header>
-    <div th:replace="~{Navigation :: NavigationBar}">
+    <div th:replace="~{navigation :: NavigationBar}">
         <ul class="navigation-bar">
             <li>
                 <a th:href="@{/index}" href="../Index.html">Home</a>
@@ -20,14 +20,25 @@
     </div>
 </header>
 <main>
-    <h1>User Added</h1>
-    <p class="message">
-        The new <span th:text="${role}">user</span> account
-        <span th:text="${login}" class="user">simpson</span> has been added.
-    </p>
-    <p>
-        <a th:href="@{list-users}" href="ListUsers.html">List Users</a>
-    </p>
+    <h1>Users</h1>
+    <ul>
+        <li>
+            <a th:href="@{add-user}" href="add-user.html">Add User</a>
+        </li>
+        <li>
+            <a th:href="@{list-users}" href="list-users.html">List Users</a>
+        </li>
+        <li>
+            <a th:href="@{/students/index}" href="../students/Index.html">Students</a>
+        </li>
+        <li>
+            <a th:href="@{/password/change-password}"
+               href="../passwords/ChangePassword.html">Change Password</a>
+        </li>
+        <li>
+            <a th:href="@{/logout}" href="../Index.html">Logout</a>
+        </li>
+    </ul>
 </main>
 </body>
 </html>

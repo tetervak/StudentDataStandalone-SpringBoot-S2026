@@ -34,10 +34,10 @@ public class PasswordDataController {
     public String changePassword(Model model) {
         log.trace("changePassword() is called");
         model.addAttribute("pcform", new PasswordChangeForm());
-        return "ChangePassword";
+        return "change-password";
     }
 
-    // a user clicks "Change Password" button in "ChangePassword.html",
+    // a user clicks "Change Password" button in "change-password.html",
     // the form submits data to "/UpdatePassword.do"
     @PostMapping("/update-password")
     public String updatePassword(
@@ -57,11 +57,11 @@ public class PasswordDataController {
 
         if (result.hasErrors()) {
             log.trace("input validation errors");
-            return "ChangePassword";
+            return "change-password";
         } else {
             loginDataService.updatePassword(login, pcform.getNewPassword1().trim());
             log.trace("the password is updated");
-            return "PasswordChanged";
+            return "password-changed";
         }
     }
 

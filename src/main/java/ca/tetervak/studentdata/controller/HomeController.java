@@ -13,7 +13,7 @@ public class HomeController {
     @GetMapping(value={"/", "/index"})
     public String index(){
         log.trace("index() is called");
-        return "Index";
+        return "index";
     }
 
     @GetMapping( "/login")
@@ -27,7 +27,7 @@ public class HomeController {
             log.debug("Login error");
         }
 
-        return "Login";
+        return "login";
     }
 
 }

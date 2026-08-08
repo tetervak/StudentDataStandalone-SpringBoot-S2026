@@ -7,21 +7,24 @@
     <link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
-    <title>Password Changed</title>
+    <title>Not Found</title>
 </head>
 <body>
 <header>
-    <div th:replace="~{Navigation :: NavigationBar}">
+    <div th:replace="~{navigation :: NavigationBar}">
         <ul class="navigation-bar">
             <li>
-                <a th:href="@{/index}" href="../Index.html">Home</a>
+                <a th:href="@{/index}" href="index.html">Home</a>
             </li>
         </ul>
     </div>
 </header>
 <main>
-    <h1>Password Changed</h1>
-    <p class="message">Your password has been changed</p>
+    <h1>Not Found</h1>
+    <p class="message">
+        Oops, your data is not found.
+    </p>
+    <p><a href="index.html" th:href="@{/index}">Index</a></p>
 </main>
 </body>
 </html>

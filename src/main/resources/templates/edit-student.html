@@ -11,10 +11,10 @@
 </head>
 <body>
 <header>
-    <div th:replace="~{Navigation :: NavigationBar}">
+    <div th:replace="~{navigation :: NavigationBar}">
         <ul class="navigation-bar">
             <li>
-                <a th:href="@{/index}" href="Index.html">Home</a>
+                <a th:href="@{/index}" href="index.html">Home</a>
             </li>
         </ul>
     </div>
@@ -22,7 +22,7 @@
 <main>
     <h1>Edit Record</h1>
     <form method="post"
-          th:action="@{/students/update-student}" action="StudentDetails.html"
+          th:action="@{/students/update-student}" action="student-details.html"
           th:object="${student}">
         <th:block th:if="${#fields.hasErrors('*')}">
             <h3 class="error">Input Errors</h3>
@@ -74,8 +74,8 @@
         </p>
     </form>
     <ul>
-        <li><a href="StudentsIndex.html" th:href="@{/students/index}">Students</a></li>
-        <li><a href="ListStudents.html" th:href="@{/students/list-students}">List Students</a></li>
+        <li><a href="students-index.html" th:href="@{/students/index}">Students</a></li>
+        <li><a href="list-students.html" th:href="@{/students/list-students}">List Students</a></li>
     </ul>
 </main>
 </body>

@@ -31,10 +31,10 @@ public class UserDataController {
     @GetMapping(value={"/","/index"})
     public String index(){
         log.trace("index() is called");
-        return "UsersIndex";
+        return "users-index";
     }
 
-    // an admin clicks "List Users" link in "Index.html",
+    // an admin clicks "List Users" link in "index.html",
     @GetMapping("/list-users")
     public String listUsers(Model model) {
         log.trace("listUsers() is called");
@@ -45,20 +45,20 @@ public class UserDataController {
                 loginDataService.getAllUserNames("ROLE_USER"));
         model.addAttribute("admins",
                 loginDataService.getAllUserNames("ROLE_ADMIN"));
-        return "ListUsers";
+        return "list-users";
     }
 
-    // an admin clicks "Add User" link in "ListUsers.html",
+    // an admin clicks "Add User" link in "list-users.html",
     @GetMapping("/add-user")
     public String addUser(Model model) {
         log.trace("addUser() is called");
         String message = "Enter login and password for the new user account.";
         model.addAttribute("message", message);
         model.addAttribute("random", passwordGenerator.randomPassword());
-        return "AddUser";
+        return "add-user";
     }
 
-    // an admin clicks on "Add User" button in "AddUser.html",
+    // an admin clicks on "Add User" button in "add-user.html",
     // the form submits the data to "InsertUser"
     @PostMapping("/insert-user")
     public String insertUser(
@@ -96,20 +96,20 @@ public class UserDataController {
                 log.trace("added ROLE_USER to {}", login);
                 model.addAttribute("role","user");
             }
-            return "UserAdded";
+            return "user-added";
         }
         model.addAttribute("message", message);
         model.addAttribute("random", passwordGenerator.randomPassword());
-        return "AddUser";
+        return "add-user";
     }
 
-    // an admin clicks "Delete" link in "ListUsers.html",
+    // an admin clicks "Delete" link in "list-users.html",
     @GetMapping("/delete-user")
     public String deleteUser(@RequestParam String login, Model model) {
         log.trace("deleteUser() is called");
         log.debug("deleteUser: login = {}", login);
         model.addAttribute("user", login);
-        return "DeleteUser";
+        return "delete-user";
     }
 
     // an admin clicks on "Delete User" button in "DeleteUser.jsp",

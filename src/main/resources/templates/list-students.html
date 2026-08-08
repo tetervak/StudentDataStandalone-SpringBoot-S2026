@@ -11,10 +11,10 @@
 </head>
 <body>
 <header>
-    <div th:replace="~{Navigation :: NavigationBar}">
+    <div th:replace="~{navigation :: NavigationBar}">
         <ul class="navigation-bar">
             <li>
-                <a th:href="@{/index}" href="Index.html">Home</a>
+                <a th:href="@{/index}" href="index.html">Home</a>
             </li>
         </ul>
     </div>
@@ -36,12 +36,12 @@
             <td th:text="${s.lastName}">Simpson</td>
             <td th:text="${s.program.programName}">Program Name</td>
             <td>
-                <a href="StudentDetails.html" th:href="@{/students/student-details/{id}(id=${s.id})}">Details</a>
+                <a href="student-details.html" th:href="@{/students/student-details/{id}(id=${s.id})}">Details</a>
                 <span sec:authorize="hasRole('ADMIN')">
                 &nbsp;|&nbsp;
-                <a href="EditStudent.html" th:href="@{/students/edit-student(id=${s.id})}">Edit</a>
+                <a href="edit-student.html" th:href="@{/students/edit-student(id=${s.id})}">Edit</a>
                 &nbsp;|&nbsp;
-                <a href="DeleteStudent.html" th:href="@{/students/delete-student(id=${s.id})}">Delete</a>
+                <a href="delete-student.html" th:href="@{/students/delete-student(id=${s.id})}">Delete</a>
                 </span>
             </td>
         </tr>
@@ -49,13 +49,13 @@
     <p class="message" th:if="${#lists.isEmpty(students)}">No student data</p>
     <ul>
         <li>
-            <a href="StudentsIndex.html" th:href="@{/students/index}">Students</a>
+            <a href="students-index.html" th:href="@{/students/index}">Students</a>
         </li>
         <li sec:authorize="hasRole('ADMIN')">
-            <a href="AddStudent.html" th:href="@{/students/add-student}">Add Student</a>
+            <a href="add-student.html" th:href="@{/students/add-student}">Add Student</a>
         </li>
         <li sec:authorize="hasRole('ADMIN')">
-            <a href="ListStudents.html" th:href="@{/students/delete-all}">Delete All</a>
+            <a href="list-students.html" th:href="@{/students/delete-all}">Delete All</a>
         </li>
     </ul>
 </main>

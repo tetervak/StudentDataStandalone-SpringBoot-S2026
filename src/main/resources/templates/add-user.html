@@ -11,7 +11,7 @@
 </head>
 <body>
 <header>
-    <div th:replace="~{Navigation :: NavigationBar}">
+    <div th:replace="~{navigation :: NavigationBar}">
         <ul class="navigation-bar">
             <li>
                 <a th:href="@{/index}" href="../Index.html">Home</a>
@@ -23,7 +23,7 @@
     <h1>Add User</h1>
     <p th:text="${message}" class="message">Message</p>
     <form method="post"
-          th:action="@{insert-user}" action="UserAdded.html">
+          th:action="@{insert-user}" action="user-added.html">
         <p>
             <label for="login" class="group-label">Login</label>
             <input id="login" type="text" name="login" th:value="${login}" required>
@@ -42,7 +42,7 @@
         </p>
     </form>
     <p>
-        <a th:href="@{list-users}" href="ListUsers.html">List Users</a>
+        <a th:href="@{list-users}" href="list-users.html">List Users</a>
     </p>
 </main>
 </body>
