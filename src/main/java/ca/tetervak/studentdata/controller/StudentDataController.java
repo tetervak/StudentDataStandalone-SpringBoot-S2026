@@ -38,7 +38,7 @@ public class StudentDataController {
     @GetMapping(value={"/", "/index"})
     public String index(){
         log.trace("index() is called");
-        return "students-index";
+        return "students/students-index";
     }
 
     @GetMapping("/list-students")
@@ -46,7 +46,7 @@ public class StudentDataController {
         log.trace("listStudents() is called");
         List<Student> students = studentDataRepository.findAll();
         log.debug("list size = {}", students.size());
-        return new ModelAndView("list-students", "students", students);
+        return new ModelAndView("students/list-students", "students", students);
     }
 
     @Secured("ROLE_ADMIN")
@@ -55,7 +55,7 @@ public class StudentDataController {
         log.trace("addStudent() is called");
         Student student = new Student();
         ModelAndView modelAndView =
-                new ModelAndView("add-student",
+                new ModelAndView("students/add-student",
                                     "student", student);
         List<Program> programs = programDataRepository.findAll();
         modelAndView.addObject("programs", programs);
@@ -82,7 +82,7 @@ public class StudentDataController {
             model.addAttribute("student", student);
             List<Program> programs = programDataRepository.findAll();
             model.addAttribute("programs", programs);
-            return "add-student";
+            return "students/add-student";
         } else {
             log.trace("insertStudent: the user inputs are correct");
             Student savedStudent = studentDataRepository.save(student);
@@ -103,7 +103,7 @@ public class StudentDataController {
             log.debug("confirmInsert: student = {}", student);
             log.trace("confirmInsert: showing the data in the confirmation page");
             model.addAttribute("student", student);
-            return "confirm-insert";
+            return "students/confirm-insert-student";
         } catch (NumberFormatException e) {
             log.trace("the id is not an integer");
             return "data-not-found";
@@ -124,11 +124,11 @@ public class StudentDataController {
     @GetMapping("/student-details/{id}")
     public String studentDetails(@PathVariable String id, Model model){
         log.trace("studentDetails() is called");
-        log.debug("id = " + id);
+        log.debug("studentDetails: id = {}", id);
         try {
             Student student = studentDataRepository.findById(Integer.parseInt(id)).orElseThrow();
             model.addAttribute("student", student);
-            return "student-details"; // show the student data in the form to edit
+            return "students/student-details"; // show the student data in the form to edit
         } catch (NumberFormatException e) {
             log.trace("studentDetails: the id is missing or not an integer");
             return "data-not-found";
@@ -147,7 +147,7 @@ public class StudentDataController {
         try {
             Student student = studentDataRepository.findById(Integer.parseInt(id)).orElseThrow();
             model.addAttribute("student", student);
-            return "delete-student"; // ask "Do you really want to remove?"
+            return "students/delete-student"; // ask, "Do you really want to remove?"
         } catch (NumberFormatException e) {
             log.trace("deleteStudent: the id is missing or not an integer");
             return "data-not-found";
@@ -157,7 +157,7 @@ public class StudentDataController {
         }
     }
 
-    // a user clicks "Remove Record" button in "DeleteStudent" page,
+    // a user clicks "Remove Record" button on "DeleteStudent" page,
     // the form submits the data to "RemoveStudent"
     @Secured("ROLE_ADMIN")
     @PostMapping("/remove-student")
@@ -184,12 +184,12 @@ public class StudentDataController {
             model.addAttribute("student", student);
             List<Program> programs = programDataRepository.findAll();
             model.addAttribute("programs", programs);
-            return "edit-student";
+            return "students/edit-student";
         } catch (NumberFormatException e) {
             log.trace("editStudent: the id is missing or not an integer");
             return "data-not-found";
         } catch (NoSuchElementException e){
-            log.trace("no data for this id = " + id);
+            log.trace("editStudent: no data for this id = {}", id);
             return "data-not-found";
         }
     }
@@ -214,7 +214,7 @@ public class StudentDataController {
             model.addAttribute("student", student);
             List<Program> programs = programDataRepository.findAll();
             model.addAttribute("programs", programs);
-            return "edit-student";
+            return "students/edit-student";
         } else {
             log.trace("the user inputs are correct");
             studentDataRepository.save(student);

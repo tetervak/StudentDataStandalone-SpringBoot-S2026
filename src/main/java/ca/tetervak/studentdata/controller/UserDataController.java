@@ -31,7 +31,7 @@ public class UserDataController {
     @GetMapping(value={"/","/index"})
     public String index(){
         log.trace("index() is called");
-        return "users-index";
+        return "users/users-index";
     }
 
     // an admin clicks "List Users" link in "index.html",
@@ -45,7 +45,7 @@ public class UserDataController {
                 loginDataService.getAllUserNames("ROLE_USER"));
         model.addAttribute("admins",
                 loginDataService.getAllUserNames("ROLE_ADMIN"));
-        return "list-users";
+        return "users/list-users";
     }
 
     // an admin clicks "Add User" link in "list-users.html",
@@ -55,7 +55,7 @@ public class UserDataController {
         String message = "Enter login and password for the new user account.";
         model.addAttribute("message", message);
         model.addAttribute("random", passwordGenerator.randomPassword());
-        return "add-user";
+        return "users/add-user";
     }
 
     // an admin clicks on "Add User" button in "add-user.html",
@@ -96,11 +96,11 @@ public class UserDataController {
                 log.trace("added ROLE_USER to {}", login);
                 model.addAttribute("role","user");
             }
-            return "user-added";
+            return "users/user-added";
         }
         model.addAttribute("message", message);
         model.addAttribute("random", passwordGenerator.randomPassword());
-        return "add-user";
+        return "users/add-user";
     }
 
     // an admin clicks "Delete" link in "list-users.html",
@@ -109,7 +109,7 @@ public class UserDataController {
         log.trace("deleteUser() is called");
         log.debug("deleteUser: login = {}", login);
         model.addAttribute("user", login);
-        return "delete-user";
+        return "users/delete-user";
     }
 
     // an admin clicks on "Delete User" button in "DeleteUser.jsp",

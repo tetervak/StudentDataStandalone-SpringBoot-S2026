@@ -15,7 +15,7 @@
     <div th:replace="~{navigation :: NavigationBar}">
         <ul class="navigation-bar">
             <li>
-                <a th:href="@{/index}" href="index.html">Home</a>
+                <a th:href="@{/index}" href="home/index.html">Home</a>
             </li>
         </ul>
     </div>
@@ -45,7 +45,7 @@
             <td th:text="${message}">No message available</td>
         </tr>
     </table>
-    <p><a href="index.html" th:href="@{/index}">Home</a></p>
+    <p><a href="home/index.html" th:href="@{/index}">Home</a></p>
 </main>
 </body>
 </html>

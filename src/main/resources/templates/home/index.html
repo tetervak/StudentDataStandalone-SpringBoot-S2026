@@ -3,10 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/main.css}" href="../../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/footer.css}" href="../../static/css/footer.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
+    <script th:src="@{/js/footer.js}" src="../../static/js/footer.js"></script>
     <title>Index</title>
 </head>
 <body>
@@ -23,13 +23,13 @@
     <h1>Home</h1>
     <ul sec:authorize="isAuthenticated()">
         <li>
-            <a th:href="@{/students/index}" href="students-index.html">Students</a>
+            <a th:href="@{/students/index}" href="../students/students-index.html">Students</a>
         </li>
         <li sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{/users/index}" href="users-index.html">Users</a>
+            <a th:href="@{/users/index}" href="../users/users-index.html">Users</a>
         </li>
         <li>
-            <a th:href="@{/password/change-password}" href="change-password.html">Change Password</a>
+            <a th:href="@{/password/change-password}" href="../passwords/change-password.html">Change Password</a>
         </li>
     </ul>
     <div sec:authorize="isAuthenticated()">

@@ -3,10 +3,10 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/modern-normalize/2.0.0/modern-normalize.min.css" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/css/main.css}" href="../static/css/main.css" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/css/footer.css}" href="../static/css/footer.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/main.css}" href="../../static/css/main.css" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/css/footer.css}" href="../../static/css/footer.css" rel="stylesheet" type="text/css"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script th:src="@{/js/footer.js}" src="../static/js/footer.js"></script>
+    <script th:src="@{/js/footer.js}" src="../../static/js/footer.js"></script>
     <title>Add Student</title>
 </head>
 <body>
@@ -14,7 +14,7 @@
     <div th:replace="~{navigation :: NavigationBar}">
         <ul class="navigation-bar">
             <li>
-                <a th:href="@{/index}" href="index.html">Home</a>
+                <a th:href="@{/index}" href="../home/index.html">Home</a>
             </li>
         </ul>
     </div>
@@ -22,7 +22,7 @@
 <main>
     <h1>Add Student</h1>
     <form method="post"
-          th:action="@{/students/insert-student}" action="confirm-insert.html"
+          th:action="@{/students/insert-student}" action="confirm-insert-student.html"
           th:object="${student}">
 
         <th:block th:if="${#fields.hasErrors('*')}">

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @Controller
-@RequestMapping("/password/*")
+@RequestMapping("/password")
 public class PasswordDataController {
 
     private final AppLoginDataService loginDataService;
@@ -34,7 +34,7 @@ public class PasswordDataController {
     public String changePassword(Model model) {
         log.trace("changePassword() is called");
         model.addAttribute("pcform", new PasswordChangeForm());
-        return "change-password";
+        return "passwords/change-password";
     }
 
     // a user clicks "Change Password" button in "change-password.html",
@@ -57,11 +57,11 @@ public class PasswordDataController {
 
         if (result.hasErrors()) {
             log.trace("input validation errors");
-            return "change-password";
+            return "passwords/change-password";
         } else {
             loginDataService.updatePassword(login, pcform.getNewPassword1().trim());
             log.trace("the password is updated");
-            return "password-changed";
+            return "passwords/password-changed";
         }
     }
 
