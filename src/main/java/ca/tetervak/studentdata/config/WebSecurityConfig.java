@@ -22,7 +22,7 @@ public class WebSecurityConfig {
         httpSecurity.authorizeHttpRequests(
                 (authorize) -> authorize
                         .requestMatchers(
-                        "/css/**", "/js/**", "/", "/index", "/h2-console/**")
+                        "/css/**", "/webjars/**", "/", "/index",  "/h2-console/**")
                         .permitAll()
                         .requestMatchers("/users/**")
                         .hasRole("ADMIN")

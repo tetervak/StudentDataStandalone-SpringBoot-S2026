@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -221,5 +222,10 @@ public class StudentDataController {
             log.debug("updateStudent: id = {}", student.getId());
             return "redirect:/students/student-details/" + student.getId();
         }
+    }
+
+    @ModelAttribute("localDate")
+    LocalDate getlLocalDate(){
+        return LocalDate.now();
     }
 }

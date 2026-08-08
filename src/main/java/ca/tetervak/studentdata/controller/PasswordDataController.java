@@ -13,6 +13,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+
 @Slf4j
 @Controller
 @RequestMapping("/password")
@@ -63,6 +65,11 @@ public class PasswordDataController {
             log.trace("the password is updated");
             return "passwords/password-changed";
         }
+    }
+
+    @ModelAttribute("localDate")
+    LocalDate getlLocalDate(){
+        return LocalDate.now();
     }
 
 }

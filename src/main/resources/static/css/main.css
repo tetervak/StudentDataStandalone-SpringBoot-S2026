@@ -121,3 +121,7 @@ span.user{
     font-weight: bolder;
     color: blueviolet;
 }
+
+footer{
+    font-style: italic;
+}
