@@ -26,6 +26,16 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
+
+    // Source: https://mvnrepository.com/artifact/org.webjars/bootstrap
+    implementation("org.webjars:bootstrap:5.3.8")
+
+    // Source: https://mvnrepository.com/artifact/org.webjars/webjars-locator-lite
+    implementation("org.webjars:webjars-locator-lite:1.1.3")
+
+    // Source: https://mvnrepository.com/artifact/org.webjars.npm/bootstrap-icons
+    implementation("org.webjars.npm:bootstrap-icons:1.13.1")
+
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("com.h2database:h2")
