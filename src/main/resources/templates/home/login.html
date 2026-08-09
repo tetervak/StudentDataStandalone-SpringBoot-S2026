@@ -15,12 +15,12 @@
 </header>
 <main class="container">
 	<h2 class="mt-4 mb-3">Login</h2>
-	<div class="alert alert-info ms-4 w-25" role="alert">
+	<div class="alert alert-info ms-4" role="alert" style="width: 25rem;">
 		<span class="message">Please login to continue.</span>
 	</div>
-	<p th:if="${error}" class="message">
-		You did not log in successfully.
-	</p>
+	<div th:if="${error}" class="alert alert-warning ms-4" role="alert" style="width: 25rem;">
+		<span class="message">You did not log in successfully.</span>
+	</div>
 
 	<form th:action="@{/login}" action="index.html" method="post">
 		<p>
