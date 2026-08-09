@@ -15,20 +15,14 @@ div.navigation-bar{
     display: flex;
     font-family: sans-serif;
     font-size: larger;
-    background-color: #4caf50;
     overflow: hidden;
 }
 
 div.navigation-bar div{
     float: left;
-    color: white;
     text-align: center;
-    padding: 16px;
-    text-decoration: none;
-}
-
-div.navigation-bar a{
-    color:white;
+    padding-left: 32px;
+    padding-right: 32px;
 }
 
 div.navigation-bar button{
@@ -36,7 +30,7 @@ div.navigation-bar button{
     border: none;
     padding: 0;
     font: inherit;
-    color: white;
+    color: cornflowerblue;
     font-weight: bolder;
     text-decoration: none;
     cursor: pointer;
@@ -46,21 +40,16 @@ div.navigation-bar button:hover{
     text-decoration: underline;
 }
 
-label.group-label{
-    color: #673ab7;
+.group-label{
+    color: blueviolet;
 }
 
-label.output-label{
-    color: #673ab7;
-}
-
-input, select{
-    margin-left: 1em;
-    margin-top: 0.5em;
+.output-label{
+    color: blueviolet;
 }
 
 a{
-    color: limegreen;
+    color: cornflowerblue;
     font-weight: bolder;
     text-decoration: none;
 }
@@ -77,12 +66,24 @@ span.output{
 
 
 h1{
-    color: #4caf50;
-    text-shadow: 2px 2px 5px #81c784;
+    color: forestgreen;
 }
 
 h2 {
-    color: #00bcd4;
+    color: darkcyan;
+}
+
+h3 {
+    color: darkgreen;
+}
+
+
+.student-card {
+    width: 18rem;
+}
+
+.student-card h3 {
+    color: darkgreen;
 }
 
 .error{
@@ -103,4 +104,5 @@ span.user{
 
 footer{
     font-style: italic;
+    color: indigo;
 }

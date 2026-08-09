@@ -14,7 +14,7 @@
     <h1>Some header text</h1>
 </header>
 <main class="container">
-    <h1 class="mt-4 mb-3">List All</h1>
+    <h2 class="mt-4 mb-3">List Students</h2>
     <table th:unless="${#lists.isEmpty(students)}" class="ms-4 table table-striped table-bordered w-auto">
         <thead>
             <tr class="table-primary">
@@ -43,17 +43,15 @@
         </tbody>
     </table>
     <p class="message" th:if="${#lists.isEmpty(students)}">No student data</p>
-    <ul>
-        <li>
-            <a th:href="@{/students/index}">Students</a>
-        </li>
-        <li sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{/students/add-student}">Add Student</a>
-        </li>
-        <li sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{/students/delete-all}">Delete All</a>
-        </li>
-    </ul>
+
+    <div sec:authorize="hasRole('ADMIN')" class="mt-4">
+        <a th:href="@{/students/add-student}" class="btn btn-outline-primary"><i class="bi bi-plus me-2"></i>Add Student</a>
+    </div>
+
+    <form th:action="@{/students/delete-all}" method="post" sec:authorize="hasRole('ADMIN')" class="mt-3">
+        <button type="submit" class="btn btn-outline-danger"><i class="bi bi-trash me-2"></i>Delete All</button>
+    </form>
+
 </main>
 <footer th:replace="~{home/index::footer}">
     Some footer text

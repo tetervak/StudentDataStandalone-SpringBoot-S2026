@@ -14,7 +14,7 @@
     <h1>Some header text</h1>
 </header>
 <main class="container">
-    <h1 class="mt-4 mb-3">Edit Record</h1>
+    <h2 class="mt-4 mb-3">Edit Record</h2>
     <form method="post"
           th:action="@{/students/update-student}" action="student-details.html"
           th:object="${student}">
@@ -26,7 +26,7 @@
             </ul>
         </th:block>
         <input type="hidden" th:field="*{id}">
-        <h2>Student Name</h2>
+        <h3>Student Name</h3>
         <p>
             <label for="first" class="group-label">First Name</label><br>
             <th:block th:if="${#fields.hasErrors('firstName')}">
@@ -41,7 +41,7 @@
             </th:block>
             <input id="last" type="text" th:field="*{lastName}" value="Simpson"/>
         </p>
-        <h2>Student Info:</h2>
+        <h3>Student Info:</h3>
         <p>
             <label for="prog" class="group-label">Program</label><br>
             <select id="prog" th:field="*{program.id}">

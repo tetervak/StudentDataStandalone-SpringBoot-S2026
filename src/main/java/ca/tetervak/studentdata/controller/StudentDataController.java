@@ -115,7 +115,7 @@ public class StudentDataController {
     }
 
     @Secured("ROLE_ADMIN")
-    @GetMapping("/delete-all")
+    @PostMapping("/delete-all")
     public String deleteAll(){
         log.trace("deleteAll() is called");
         studentDataRepository.deleteAll();
