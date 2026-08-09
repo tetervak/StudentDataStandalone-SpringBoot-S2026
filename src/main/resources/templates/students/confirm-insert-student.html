@@ -15,37 +15,45 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">Confirm Insert</h2>
-    <h3>Entered Data:</h3>
-    <div th:object="${student}">
-        <p>
-            <label class="group-label">First Name:</label>
-            <span class="output" th:text="*{firstName}">Bart</span>
-        </p>
-        <p>
-            <label class="group-label">Last Name:</label>
-            <span class="output" th:text="*{lastName}">Simpson</span>
-        </p>
-        <p>
-            <label class="group-label">Program:</label>
-            <span class="output" th:text="*{program.programName}">Computer Programmer</span>
-        </p>
-        <p>
-            <label class="group-label">International:</label>
-            <span class="output" th:text="*{international}?'yes':'no'">no</span>
-        </p>
-        <p>
-            <label class="group-label">Year:</label>
-            <span class="output" th:text="*{programYear}">1</span>
-        </p>
-        <p>
-            <label class="group-label">Co-op:</label>
-            <span class="output" th:text="*{programCoop}?'yes':'no'">yes</span>
-        </p>
+    <div class="card ms-4 student-card">
+        <div th:object="${student}" class="card-body">
+            <h3 class="card-title mb-4" th:text="|*{firstName} *{lastName}|">Student Name</h3>
+            <p>
+                <label class="group-label">First Name:</label>
+                <span class="output" th:text="*{firstName}">Bart</span>
+            </p>
+            <p>
+                <label class="group-label">Last Name:</label>
+                <span class="output" th:text="*{lastName}">Simpson</span>
+            </p>
+            <p>
+                <label class="group-label">Program:</label>
+                <span class="output" th:text="*{program.programName}">Computer Programmer</span>
+            </p>
+            <p>
+                <label class="group-label">International:</label>
+                <span class="output" th:text="*{international}?'yes':'no'">no</span>
+            </p>
+            <p>
+                <label class="group-label">Year:</label>
+                <span class="output" th:text="*{programYear}">1</span>
+            </p>
+            <p>
+                <label class="group-label">Co-op:</label>
+                <span class="output" th:text="*{programCoop}?'yes':'no'">yes</span>
+            </p>
+        </div>
     </div>
-    <ul>
-        <li><a href="students-index.html" th:href="@{/students/index}">Students</a></li>
-        <li><a href="add-student.html" th:href="@{/students/add-student}">Add Student</a></li>
-        <li><a href="list-students.html" th:href="@{/students/list-students}">List Students</a></li>
+    <ul class="mt-4 list-group list-group-horizontal">
+        <li class="list-group-item">
+            <a th:href="@{/students/edit-student(id=${student.id})}"><i class="bi bi-pen me-2"></i>Edit Student</a>
+        </li>
+        <li  class="list-group-item">
+            <a th:href="@{/students/add-student}"><i class="bi bi-plus me-2"></i>Add Student</a>
+        </li>
+        <li class="list-group-item">
+            <a th:href="@{/students/list-students}"><i class="bi bi-list me-2"></i>List Students</a>
+        </li>
     </ul>
 </main>
 <footer th:replace="~{home/index::footer}">
