@@ -15,9 +15,13 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">Students Index</h2>
-    <ul>
-        <li sec:authorize="hasRole('ADMIN')"><a href="add-student.html" th:href="@{/students/add-student}">Add Student</a></li>
-        <li><a href="list-students.html" th:href="@{/students/list-students}">List Students</a></li>
+    <ul class="list-group ms-3" style="width: 12rem;">
+        <li class="list-group-item" sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/students/add-student}"><i class="bi bi-plus me-2"></i>Add Student</a>
+        </li>
+        <li class="list-group-item">
+            <a th:href="@{/students/list-students}"><i class="bi bi-list me-2"></i>List Students</a>
+        </li>
     </ul>
 </main>
 <footer th:replace="~{home/index::footer}">
