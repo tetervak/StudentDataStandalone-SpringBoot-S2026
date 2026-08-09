@@ -93,8 +93,8 @@ h3 {
 
 .message{
     font-size: larger;
-    font-weight: bolder;
-    color: #ff9800;
+
+    color: orange;
 }
 
 span.user{

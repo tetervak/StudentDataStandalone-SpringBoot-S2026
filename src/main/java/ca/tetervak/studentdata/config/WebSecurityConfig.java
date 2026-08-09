@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
@@ -22,7 +23,8 @@ public class WebSecurityConfig {
         httpSecurity.authorizeHttpRequests(
                 (authorize) -> authorize
                         .requestMatchers(
-                        "/css/**", "/webjars/**", "/", "/index",  "/h2-console/**")
+                        "/css/**", "/webjars/**", "/", "/index",
+                                "/error","/.well-known/**", "/h2-console/**")
                         .permitAll()
                         .requestMatchers("/users/**")
                         .hasRole("ADMIN")
@@ -77,4 +79,5 @@ public class WebSecurityConfig {
     public SpringSecurityDialect securityDialect() {
         return new SpringSecurityDialect();
     }
+
 }
