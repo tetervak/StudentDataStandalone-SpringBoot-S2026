@@ -7,70 +7,106 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/main.css}">
-    <title>Edit Record</title>
+    <title>Edit Student Record</title>
 </head>
 <body>
 <header th:replace="~{home/index::header}">
     <h1>Some header text</h1>
 </header>
 <main class="container">
-    <h2 class="mt-4 mb-3">Edit Record</h2>
-    <form method="post"
-          th:action="@{/students/update-student}" action="student-details.html"
+    <h2 class="mt-4 mb-3">Edit Student Record</h2>
+    <form method="post" th:with="errors=${#fields.hasErrors('*')}"
+          th:action="@{/students/update-student}"
           th:object="${student}">
-        <th:block th:if="${#fields.hasErrors('*')}">
-            <h3 class="error">Input Errors</h3>
+
+        <div th:if="${errors}" class="alert alert-danger ms-2" role="alert" style="width: 18rem;">
+            <h3 class="error card-title mb-2" >Input Errors</h3>
             <ul>
                 <li th:each="e: ${#fields.errors('*')}" th:text="${e}"
                     class="error">Input Error</li>
             </ul>
-        </th:block>
+        </div>
+
+        <!-- We must include the hidden input field for the ID -->
         <input type="hidden" th:field="*{id}">
-        <h3>Student Name</h3>
-        <p>
-            <label for="first" class="group-label">First Name</label><br>
-            <th:block th:if="${#fields.hasErrors('firstName')}">
-                <span class="error" th:errors="*{firstName}">First Name Error</span><br>
-            </th:block>
-            <input id="first" type="text" th:field="*{firstName}" value="Bart"/>
-        </p>
-        <p>
-            <label for="last" class="group-label">Last Name</label><br>
-            <th:block th:if="${#fields.hasErrors('lastName')}">
-                <span class="error" th:errors="*{lastName}">Last Name Error</span><br>
-            </th:block>
-            <input id="last" type="text" th:field="*{lastName}" value="Simpson"/>
-        </p>
-        <h3>Student Info:</h3>
-        <p>
-            <label for="prog" class="group-label">Program</label><br>
-            <select id="prog" th:field="*{program.id}">
-                <option th:each="p: ${programs}"
-                        th:value="${p.id}" th:text="${p.programName}">Program Name</option>
-            </select>
-        </p>
-        <p>
-            <label><input type="checkbox" th:field="*{international}" th:value="yes"/>&nbsp;International</label>
-        </p>
-        <p>
-            <label class="group-label">Year</label><br>
-            <label><input type="radio" th:field="*{programYear}" th:value="1">&nbsp;1</label>
-            <label><input type="radio" th:field="*{programYear}" th:value="2">&nbsp;2</label>
-            <label><input type="radio" th:field="*{programYear}" th:value="3">&nbsp;3</label>
-        </p>
-        <p>
-            <label class="group-label">Options</label><br>
-            <label><input type="checkbox" th:field="*{programCoop}" th:value="yes"/>&nbsp;Co-op</label>
-        </p>
-        <p>
-            <input type="reset" value="Clear"/>
-            <input type="submit" value="Send"/>
-        </p>
+
+        <h3 class="mt-4">Student Name</h3>
+        <div class="mt-3 ms-4 row">
+            <div class="col-sm-6 col-md-4 col-lg-3" th:with="fieldErrors=${#fields.hasErrors('firstName')}">
+                <label for="first" class="group-label form-label">First Name</label>
+                <input id="first" type="text" th:field="*{firstName}"
+                       th:class="|form-control ${errors?(fieldErrors?'is-invalid':'is-valid'):''}|"/>
+                <div class="invalid-feedback" th:errors="*{firstName}">First Name Error</div>
+            </div>
+        </div>
+        <div class="mt-3 ms-4 row">
+            <div class="col-sm-6 col-md-4 col-lg-3" th:with="fieldErrors=${#fields.hasErrors('lastName')}">
+                <label for="last" class="group-label form-label">Last Name</label><br>
+                <input id="last" type="text" th:field="*{lastName}"
+                       th:class="|form-control ${errors?(fieldErrors?'is-invalid':'is-valid'):''}|"/>
+                <div class="invalid-feedback" th:errors="*{lastName}">Last Name Error</div>
+            </div>
+        </div>
+        <h3 class="mt-4">Student Info</h3>
+        <div class="mt-3 ms-4 row">
+            <div class="col-sm-6 col-md-4 col-lg-3" th:with="fieldErrors=${#fields.hasErrors('program.id')}">
+                <label for="prog" class="group-label form-label">Program</label><br>
+                <select id="prog" th:field="*{program.id}"
+                        th:class="|form-control ${errors?(fieldErrors?'is-invalid':'is-valid'):''}|">
+                    <option th:each="p: ${programs}" th:value="${p.id}" th:text="${p.programName}">Program Name</option>
+                </select>
+                <div class="invalid-feedback" th:errors="*{program.id}">Program Name Error</div>
+            </div>
+        </div>
+        <div class="mt-3 ms-4 row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-check">
+                    <label for="international" class="form-check-label">International</label>
+                    <input id="international" type="checkbox" th:field="*{international}" th:value="yes"
+                           th:class="|form-check-input ${errors?'is-valid':''}|"/>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 ms-4 row">
+            <div class="col-sm-6 col-md-4 col-lg-3">
+                <div class="form-check">
+                    <label for="coop" class="form-check-label">Co-op</label>
+                    <input id="coop" type="checkbox" th:field="*{programCoop}" th:value="yes"
+                           th:class="|form-check-input ${errors?'is-valid':''}|"/>
+                </div>
+            </div>
+        </div>
+        <div class="mt-3 ms-4 row">
+            <div class="col-sm-6 col-md-4 col-lg-3" th:with="fieldErrors=${#fields.hasErrors('programYear')}">
+                <div class="group-label">Year</div>
+                <div class="d-flex">
+                    <div class="form-check">
+                        <input id="year-1" type="radio" th:field="*{programYear}" th:value="1"
+                               th:class="|form-check-input ${errors?(fieldErrors?'is-invalid':'is-valid'):''}|">
+                        <label for="year-1" class="form-check-label">1</label>
+                    </div>
+                    <div class="form-check ms-3">
+                        <input id="year-2" type="radio" th:field="*{programYear}" th:value="2"
+                               th:class="|form-check-input ${errors?(fieldErrors?'is-invalid':'is-valid'):''}|">
+                        <label for="year-2" class="form-check-label">2</label>
+                    </div>
+                    <div class="form-check ms-3">
+                        <input id="year-3" type="radio" th:field="*{programYear}" th:value="3"
+                               th:class="|form-check-input ${errors?(fieldErrors?'is-invalid':'is-valid'):''}|">
+                        <label for="year-3" class="form-check-label">3</label>
+                    </div>
+                </div>
+                <div th:class="|invalid-feedback ${fieldErrors?'d-block':''}|" th:errors="*{programYear}">Program Name Error</div>
+            </div>
+        </div>
+        <div class="mt-4 btn-group">
+            <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-2"></i>Submit</button>
+            <a th:href="@{/students/list-students}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-2"></i>Cancel</a>
+        </div>
     </form>
-    <ul>
-        <li><a href="students-index.html" th:href="@{/students/index}">Students</a></li>
-        <li><a href="list-students.html" th:href="@{/students/list-students}">List Students</a></li>
-    </ul>
+    <p class="mt-4">
+        <a th:href="@{/students/list-students}">List Students</a>
+    </p>
 </main>
 <footer th:replace="~{home/index::footer}">
     Some footer text

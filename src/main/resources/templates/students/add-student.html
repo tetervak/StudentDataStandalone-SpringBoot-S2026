@@ -7,27 +7,26 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/main.css}">
-    <title>Add Student</title>
+    <title>Add Student Record</title>
 </head>
 <body>
 <header th:replace="~{home/index::header}">
     <h1>Some header text</h1>
 </header>
 <main class="container">
-    <h2 class="mt-4 mb-3">Add Student</h2>
+    <h2 class="mt-4 mb-3">Add Student Record</h2>
     <form method="post" th:with="errors=${#fields.hasErrors('*')}"
           th:action="@{/students/insert-student}"
           th:object="${student}">
 
-        <div th:if="${errors}" class="card ms-4 mb-3" style="width: 18rem;">
-            <div class="card-body">
-                <h3 class="error card-title" >Input Errors</h3>
-                <ul>
-                    <li th:each="e: ${#fields.errors('*')}" th:text="${e}"
-                        class="error">Input Error</li>
-                </ul>
-            </div>
+        <div th:if="${errors}" class="alert alert-danger ms-2" role="alert" style="width: 18rem;">
+            <h3 class="error card-title mb-2" >Input Errors</h3>
+            <ul>
+                <li th:each="e: ${#fields.errors('*')}" th:text="${e}"
+                    class="error">Input Error</li>
+            </ul>
         </div>
+
         <h3 class="mt-4">Student Name</h3>
         <div class="mt-3 ms-4 row">
             <div class="col-sm-6 col-md-4 col-lg-3" th:with="fieldErrors=${#fields.hasErrors('firstName')}">
@@ -98,7 +97,6 @@
                 <div th:class="|invalid-feedback ${fieldErrors?'d-block':''}|" th:errors="*{programYear}">Program Name Error</div>
             </div>
         </div>
-
         <div class="mt-4 btn-group">
             <button type="submit" class="btn btn-primary"><i class="bi bi-check-lg me-2"></i>Submit</button>
             <a th:href="@{/students/list-students}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-2"></i>Cancel</a>
