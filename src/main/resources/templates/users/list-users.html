@@ -15,7 +15,7 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">User List</h2>
-    <h3>Role: User</h3>
+    <h3 class="mt-4 mb-2 ms-4">Role: User</h3>
     <p th:if="${#lists.isEmpty(users)}" class="message">No user accounts yet.</p>
     <table th:unless="${#lists.isEmpty(users)}" class="ms-4 table table-striped table-bordered w-auto">
         <thead>
@@ -34,7 +34,7 @@
         </tbody>
     </table>
 
-    <h3>Role: Admin</h3>
+    <h3 class="mt-4 mb-2 ms-4">Role: Admin</h3>
     <table class="ms-4 table table-striped table-bordered w-auto">
         <thead>
             <tr class="table-primary">
