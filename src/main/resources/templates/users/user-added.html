@@ -10,17 +10,11 @@
     <title>User Added</title>
 </head>
 <body>
-<header>
-    <div th:replace="~{navigation :: navigation-bar}">
-        <ul class="navigation-bar">
-            <li>
-                <a th:href="@{/index}" href="../home/index.html">Home</a>
-            </li>
-        </ul>
-    </div>
+<header th:replace="~{home/index::header}">
+    <h1>Some header text</h1>
 </header>
-<main>
-    <h1>User Added</h1>
+<main class="container">
+    <h1 class="mt-4 mb-3">User Added</h1>
     <p class="message">
         The new <span th:text="${role}">user</span> account
         <span th:text="${login}" class="user">simpson</span> has been added.

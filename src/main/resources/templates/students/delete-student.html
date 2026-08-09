@@ -10,17 +10,11 @@
     <title>Delete Record</title>
 </head>
 <body>
-<header>
-    <div th:replace="~{navigation :: navigation-bar}">
-        <ul class="navigation-bar">
-            <li>
-                <a th:href="@{/index}" href="../home/index.html">Home</a>
-            </li>
-        </ul>
-    </div>
+<header th:replace="~{home/index::header}">
+    <h1>Some header text</h1>
 </header>
-<main>
-    <h1>Delete Record</h1>
+<main class="container">
+    <h1 class="mt-4 mb-3">Delete Record</h1>
     <p class="message">Do you really want to remove this record?</p>
     <h2>Record Data:</h2>
     <div th:object="${student}">

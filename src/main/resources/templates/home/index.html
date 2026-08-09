@@ -10,17 +10,30 @@
     <title>Index</title>
 </head>
 <body>
-<header>
-    <div th:replace="~{navigation :: navigation-bar}">
-        <ul class="navigation-bar">
-            <li>
-                <a th:href="@{/index}" href="index.html">Home</a>
-            </li>
-        </ul>
+<header th:fragment="header" class="container d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <h1>Student Data</h1>
+    <div th:fragment="navigation-bar" class="navigation-bar">
+        <div>
+            <a th:href="@{/index}">Home</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <a th:href="@{/students/index}">Students</a>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/users/index}">Users</a>
+        </div>
+        <div sec:authorize="isAnonymous()">
+            <a th:href="@{/login}">Login</a>
+        </div>
+        <div sec:authorize="isAuthenticated()">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </div>
     </div>
 </header>
-<main>
-    <h1>Home</h1>
+<main class="container">
+    <h1 class="mt-4 mb-3">Home</h1>
     <ul sec:authorize="isAuthenticated()">
         <li>
             <a th:href="@{/students/index}" href="../students/students-index.html">Students</a>
@@ -34,11 +47,11 @@
     </ul>
     <div sec:authorize="isAuthenticated()">
         <form th:action="@{/logout}" method="post">
-            <button type="submit">Logout</button>
+            <button type="submit" class="btn btn-outline-primary">Logout<i class="ms-2 bi bi-box-arrow-right"></i></button>
         </form>
     </div>
     <p sec:authorize="isAnonymous()">
-        <a th:href="@{/login}" href="login.html">Login</a>
+        <a th:href="@{/login}" href="login.html" class="btn btn-primary">Login<i class="ms-2 bi bi-box-arrow-in-right"></i></a>
     </p>
 </main>
 <footer th:fragment="footer" class="container d-flex flex-column flex-wrap align-items-center py-3 mt-4 border-top">

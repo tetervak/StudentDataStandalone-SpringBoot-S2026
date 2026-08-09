@@ -10,17 +10,11 @@
     <title>Error</title>
 </head>
 <body>
-<header>
-    <div th:replace="~{navigation :: navigation-bar}">
-        <ul class="navigation-bar">
-            <li>
-                <a th:href="@{/index}" href="home/index.html">Home</a>
-            </li>
-        </ul>
-    </div>
-    <h1>Student Data Error</h1>
+<header th:replace="~{home/index::header}">
+    <h1>Some header text</h1>
 </header>
-<main>
+<main class="container">
+    <h1 class="mt-4 mb-3">Error</h1>
     <p class="message">Error: <span th:text="${error}">Not Found</span></p>
     <table>
         <tr>

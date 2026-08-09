@@ -10,52 +10,48 @@
     <title>List Students</title>
 </head>
 <body>
-<header>
-    <div th:replace="~{navigation :: navigation-bar}">
-        <ul class="navigation-bar">
-            <li>
-                <a th:href="@{/index}" href="../home/index.html">Home</a>
-            </li>
-        </ul>
-    </div>
+<header th:replace="~{home/index::header}">
+    <h1>Some header text</h1>
 </header>
-<main>
-    <h1>List All</h1>
-    <table th:unless="${#lists.isEmpty(students)}">
-        <tr>
-            <th>Count</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Program</th>
-            <th>Options</th>
-        </tr>
-        <tr th:each="s,c: ${students}">
-            <td th:text="${c.count}">1</td>
+<main class="container">
+    <h1 class="mt-4 mb-3">List All</h1>
+    <table th:unless="${#lists.isEmpty(students)}" class="ms-4 table table-striped table-bordered w-auto">
+        <thead>
+            <tr class="table-primary">
+                <th>Count</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Program</th>
+                <th>Options</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="s,c: ${students}">
+                <td th:text="${c.count}">1</td>
 
-            <td th:text="${s.firstName}">Bart</td>
-            <td th:text="${s.lastName}">Simpson</td>
-            <td th:text="${s.program.programName}">Program Name</td>
-            <td>
-                <a href="student-details.html" th:href="@{/students/student-details/{id}(id=${s.id})}">Details</a>
-                <span sec:authorize="hasRole('ADMIN')">
-                &nbsp;|&nbsp;
-                <a href="edit-student.html" th:href="@{/students/edit-student(id=${s.id})}">Edit</a>
-                &nbsp;|&nbsp;
-                <a href="delete-student.html" th:href="@{/students/delete-student(id=${s.id})}">Delete</a>
-                </span>
-            </td>
-        </tr>
+                <td th:text="${s.firstName}">Bart</td>
+                <td th:text="${s.lastName}">Simpson</td>
+                <td th:text="${s.program.programName}">Program Name</td>
+                <td>
+                    <a th:href="@{/students/student-details/{id}(id=${s.id})}"><i class="bi bi-info-circle"></i></a>
+                    <span sec:authorize="hasRole('ADMIN')">
+                        <a th:href="@{/students/edit-student(id=${s.id})}"><i class="ms-2 bi bi-pen"></i></a>
+                        <a th:href="@{/students/delete-student(id=${s.id})}"><i class="ms-2 bi bi-trash"></i></a>
+                    </span>
+                </td>
+            </tr>
+        </tbody>
     </table>
     <p class="message" th:if="${#lists.isEmpty(students)}">No student data</p>
     <ul>
         <li>
-            <a href="students-index.html" th:href="@{/students/index}">Students</a>
+            <a th:href="@{/students/index}">Students</a>
         </li>
         <li sec:authorize="hasRole('ADMIN')">
-            <a href="add-student.html" th:href="@{/students/add-student}">Add Student</a>
+            <a th:href="@{/students/add-student}">Add Student</a>
         </li>
         <li sec:authorize="hasRole('ADMIN')">
-            <a href="list-students.html" th:href="@{/students/delete-all}">Delete All</a>
+            <a th:href="@{/students/delete-all}">Delete All</a>
         </li>
     </ul>
 </main>
