@@ -42,7 +42,9 @@
             </tr>
         </tbody>
     </table>
-    <p class="message" th:if="${#lists.isEmpty(students)}">No student data</p>
+    <div th:if="${#lists.isEmpty(students)}" class="alert alert-warning w-25 ms-4" role="alert">
+        <span class="message">No student data</span>
+    </div>
 
     <div sec:authorize="hasRole('ADMIN')" class="mt-4">
         <a th:href="@{/students/add-student}" class="btn btn-outline-primary"><i class="bi bi-plus me-2"></i>Add Student</a>
