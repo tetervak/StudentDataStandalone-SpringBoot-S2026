@@ -16,28 +16,27 @@
 <main class="container">
     <h2 class="mt-4 mb-3">Add User</h2>
     <p th:text="${message}" class="message">Message</p>
-    <form method="post"
-          th:action="@{insert-user}" action="user-added.html">
-        <p>
-            <label for="login" class="group-label">Login</label>
-            <input id="login" type="text" name="login" th:value="${login}" required>
-        </p>
-        <p>
-            <label for="password" class="group-label">Password</label>
-            <input id="password" type="text" name="password" th:value="${random}" required>
-        </p>
-        <p>
+    <form method="post" th:action="@{/users/insert-user}">
+        <div class="mt-3 ms-4" style="max-width: 16rem;">
+            <label for="login" class="group-label form-label">Login</label>
+            <input id="login" type="text" name="login" th:value="${login}" class="form-control" required>
+        </div>
+        <div class="mt-3 ms-4" style="max-width: 16rem;">
+            <label for="password" class="group-label form-label">Password</label>
+            <input id="password" type="text" name="password" th:value="${random}" class="form-control" required>
+        </div>
+        <div class="mt-3 ms-4" style="max-width: 16rem;">
             <label class="group-label">Role</label><br/>
             <label><input type="radio" name="role" value="user" checked/>User</label>
             <label><input type="radio" name="role" value="admin"/>Admin</label>
-        </p>
-        <p>
-            <input type="submit" value="Add Account">
-        </p>
+        </div>
+
+        <button type="submit" class="mt-4 btn btn-primary"><i class="bi bi-person-plus me-2"></i>Add Account</button>
+
     </form>
-    <p>
+    <div class="mt-4">
         <a th:href="@{list-users}" href="list-users.html">List Users</a>
-    </p>
+    </div>
 </main>
 <footer th:replace="~{home/index::footer}">
     Some footer text
