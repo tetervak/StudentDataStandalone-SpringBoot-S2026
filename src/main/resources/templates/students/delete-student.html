@@ -15,44 +15,47 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">Delete Record</h2>
-    <p class="message">Do you really want to remove this record?</p>
-    <h3>Record Data:</h3>
-    <div th:object="${student}">
-        <p>
-            <label class="group-label">First Name:</label>
-            <span class="output" th:text="*{firstName}">Bart</span>
-        </p>
-        <p>
-            <label class="group-label">Last Name:</label>
-            <span class="output" th:text="*{lastName}">Simpson</span>
-        </p>
-        <p>
-            <label class="group-label">Program:</label>
-            <span class="output" th:text="*{program.programName}">Computer Programmer</span>
-        </p>
-        <p>
-            <label class="group-label">International:</label>
-            <span class="output" th:text="*{international}?'yes':'no'">no</span>
-        </p>
-        <p>
-            <label class="group-label">Year:</label>
-            <span class="output" th:text="*{programYear}">1</span>
-        </p>
-        <p>
-            <label class="group-label">Co-op:</label>
-            <span class="output" th:text="*{programCoop}?'yes':'no'">yes</span>
-        </p>
+    <div class="alert alert-danger ms-2" role="alert" style="width: 26rem;">
+        <span class="message">Do you really want to remove this record?</span>
+    </div>
+    <div class="card ms-4 mt-4 student-card">
+        <div th:object="${student}" class="card-body">
+            <h3 class="card-title mb-4" th:text="|*{firstName} *{lastName}|">Student Name</h3>
+            <p>
+                <label class="group-label">First Name:</label>
+                <span class="output" th:text="*{firstName}">Bart</span>
+            </p>
+            <p>
+                <label class="group-label">Last Name:</label>
+                <span class="output" th:text="*{lastName}">Simpson</span>
+            </p>
+            <p>
+                <label class="group-label">Program:</label>
+                <span class="output" th:text="*{program.programName}">Computer Programmer</span>
+            </p>
+            <p>
+                <label class="group-label">International:</label>
+                <span class="output" th:text="*{international}?'yes':'no'">no</span>
+            </p>
+            <p>
+                <label class="group-label">Year:</label>
+                <span class="output" th:text="*{programYear}">1</span>
+            </p>
+            <p>
+                <label class="group-label">Co-op:</label>
+                <span class="output" th:text="*{programCoop}?'yes':'no'">yes</span>
+            </p>
+        </div>
     </div>
     <form method="post"
-          th:action="@{/students/remove-student}" action="list-students.html">
+          th:action="@{/students/remove-student}">
         <input type="hidden" name="id" th:value="${student.id}">
-        <input type="submit" value="Remove Record">
+        <div class="mt-4 btn-group">
+            <button type="submit" class="btn btn-danger"><i class="bi bi-check-lg me-2"></i>Remove Record</button>
+            <a th:href="@{/students/list-students}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-2"></i>Cancel</a>
+        </div>
     </form>
-    <ul>
-        <li><a href="students-index.html" th:href="@{/students/index}">Students</a></li>
-        <li><a href="add-student.html" th:href="@{/students/add-student}">Add Student</a></li>
-        <li><a href="list-students.html" th:href="@{/students/list-students}">List Students</a></li>
-    </ul>
+    <a th:href="@{/students/list-students}" class="mt-4 btn btn-outline-primary"><i class="bi bi-list me-2"></i>List Students</a>
 </main>
 <footer th:replace="~{home/index::footer}">
     Some footer text
