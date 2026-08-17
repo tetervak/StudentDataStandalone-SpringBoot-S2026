@@ -18,21 +18,20 @@
     <table th:unless="${#lists.isEmpty(students)}" class="ms-4 table table-striped table-bordered w-auto">
         <thead>
             <tr class="table-primary">
-                <th>Count</th>
+                <th class="text-center">Count</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Program</th>
-                <th>Options</th>
+                <th class="text-center">Options</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="s,c: ${students}">
-                <td th:text="${c.count}">1</td>
-
+                <td class="text-center" th:text="${c.count}" >1</td>
                 <td th:text="${s.firstName}">Bart</td>
                 <td th:text="${s.lastName}">Simpson</td>
                 <td th:text="${s.program.programName}">Program Name</td>
-                <td>
+                <td class="text-center">
                     <a th:href="@{/students/student-details/{id}(id=${s.id})}"><i class="bi bi-info-circle"></i></a>
                     <span sec:authorize="hasRole('ADMIN')">
                         <a th:href="@{/students/edit-student(id=${s.id})}"><i class="ms-2 bi bi-pen"></i></a>
