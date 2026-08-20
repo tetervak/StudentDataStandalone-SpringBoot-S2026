@@ -32,10 +32,4 @@ public class HomeController {
 
         return "home/login";
     }
-
-    @ModelAttribute("localDate")
-    LocalDate getlLocalDate(){
-        return LocalDate.now();
-    }
-
 }

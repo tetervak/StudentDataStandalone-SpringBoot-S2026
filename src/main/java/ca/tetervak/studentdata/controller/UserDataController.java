@@ -119,9 +119,4 @@ public class UserDataController {
         loginDataService.removeUser(login);
         return "redirect:/users/list-users";
     }
-
-    @ModelAttribute("localDate")
-    LocalDate getlLocalDate(){
-        return LocalDate.now();
-    }
 }

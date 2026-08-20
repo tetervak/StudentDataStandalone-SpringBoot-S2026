@@ -66,10 +66,4 @@ public class PasswordDataController {
             return "passwords/password-changed";
         }
     }
-
-    @ModelAttribute("localDate")
-    LocalDate getlLocalDate(){
-        return LocalDate.now();
-    }
-
 }

@@ -59,7 +59,7 @@
         <div class="d-block d-sm-none">PROG27545 / Web Application Design</div>
         <div class="d-block d-sm-none">and Implementation</div>
     <div>Sheridan College, Alexander Tetervak</div>
-    <div th:text="${#temporals.format(localDate, 'MMMM dd, yyyy')}">March 15, 2023</div>
+    <div th:text="${#temporals.format(#temporals.createNow(), 'MMMM dd, yyyy')}">March 15, 2023</div>
 </footer>
 </body>
 </html>

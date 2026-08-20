@@ -223,9 +223,4 @@ public class StudentDataController {
             return "redirect:/students/student-details/" + student.getId();
         }
     }
-
-    @ModelAttribute("localDate")
-    LocalDate getlLocalDate(){
-        return LocalDate.now();
-    }
 }
