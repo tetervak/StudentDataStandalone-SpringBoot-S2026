@@ -31,6 +31,10 @@
                 <span class="output" th:text="*{#temporals.format(dateOfBirth, 'dd MMMM, yyyy')}">2000-01-01</span>
             </p>
             <p>
+                <label class="group-label">Age:</label>
+                <span class="output" th:text="|*{age} years old|">18 years old</span>
+            </p>
+            <p>
                 <label class="group-label">Program:</label>
                 <span class="output" th:text="*{program.programName}">Computer Programmer</span>
             </p>

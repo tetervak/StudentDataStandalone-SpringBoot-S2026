@@ -12,6 +12,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 import java.time.LocalDate;
+import java.time.Period;
 
 @NoArgsConstructor
 @Getter
@@ -38,8 +39,9 @@ public class Student {
     private String lastName = "";
 
     @Column(name = "date_of_birth", nullable = false)
+    @NotNull
     @Past
-    private LocalDate dateOfBirth;
+    private LocalDate dateOfBirth = LocalDate.of(2018, 1, 1);
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "program_id", nullable = false)
@@ -63,4 +65,19 @@ public class Student {
     @LastModifiedDate
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
+
+    // returns current age in years
+    public int getAge() {
+        return getAge(LocalDate.now());
+    }
+
+    public int getAge(LocalDate onDate) {
+        if (dateOfBirth == null) {
+            throw new IllegalStateException("dateOfBirth is null");
+        }
+        if (onDate.isBefore(dateOfBirth)) {
+            throw new IllegalArgumentException("Reference date cannot be before date of birth");
+        }
+        return Period.between(dateOfBirth, onDate).getYears();
+    }
 }
