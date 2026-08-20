@@ -12,7 +12,20 @@ VALUES ('Harry', 'Potter', 1, false, 1, true),
        ('Draco', 'Malfoy', 3, true, 2, true),
        ('George', 'Weasley', 2, true, 2, false),
        ('Fred', 'Weasley', 2, false, 1, false),
-       ('Ginny', 'Weasley', 3, true, 2, true);
+       ('Ginny', 'Weasley', 3, true, 2, true),
+       ('Neville', 'Longbottom', 1, false, 1, false),
+       ('Vincent', 'Crabbe', 1, true, 1, true),
+       ('Gregory', 'Goyle', 3, false, 1, false),
+       ('Pansy','Parkinson', 1, true, 2, true),
+       ('Blaise', 'Zabini', 2, false, 1, false),
+       ('Luna', 'Lovegood', 3, true, 2, true),
+       ('Cho', 'Chang', 2, true, 2, false),
+       ('Padma', 'Patil', 3, false, 1, false),
+       ('Terry', 'Boot', 2, false, 2, false),
+       ('Cedric', 'Diggory', 1, false, 2, true),
+       ('Hannah', 'Abbott', 2, true, 2, false),
+       ('Ernie', 'Macmillan', 3, false, 1, false),
+       ('Justin', 'Finch-Fletchley', 2, true, 2, true);
 
 /* all these passwords are "sesame" */
 INSERT INTO app_user
