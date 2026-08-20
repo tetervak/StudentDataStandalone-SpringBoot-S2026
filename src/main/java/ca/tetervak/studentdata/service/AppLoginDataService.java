@@ -36,8 +36,8 @@ public class AppLoginDataService{
 
     public void insertUser(String userName, String password) {
         AppUser user = new AppUser();
-        user.setUserName(userName);
-        user.setPassword(passwordEncoder.encode(password));
+        user.setUsername(userName);
+        user.setPasswordHash(passwordEncoder.encode(password));
         userDataRepository.save(user);
     }
 
@@ -84,7 +84,7 @@ public class AppLoginDataService{
         if(role != null){
             List<AppUser> users = role.getUsers();
             for(AppUser user: users){
-                userNames.add(user.getUserName());
+                userNames.add(user.getUsername());
             }
         }
         return userNames;
@@ -106,7 +106,7 @@ public class AppLoginDataService{
     public void updatePassword(String userName, String password) {
         AppUser user = userDataRepository.findByUserName(userName);
         if(user != null){
-            user.setPassword(passwordEncoder.encode(password));
+            user.setPasswordHash(passwordEncoder.encode(password));
             userDataRepository.save(user);
         }
     }
@@ -123,7 +123,7 @@ public class AppLoginDataService{
     public String getPassword(String userName) {
         AppUser user = userDataRepository.findByUserName(userName);
         if(user != null){
-            return user.getPassword();
+            return user.getPasswordHash();
         }else{
             return null;
         }
