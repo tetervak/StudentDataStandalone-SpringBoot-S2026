@@ -54,7 +54,6 @@
             <select id="prog" th:field="*{program.id}"
                     class="form-control"
                     th:classappend="${errors} ? ${fieldErrors?'is-invalid':'is-valid'}">
-                <option value="0">--- Select Program ---</option>
                 <option th:each="p: ${programs}" th:value="${p.id}" th:text="${p.programName}">Program Name</option>
             </select>
             <div th:if="${fieldErrors}" class="invalid-feedback" th:errors="*{program.id}">Program Name Error</div>

@@ -27,6 +27,14 @@
                 <span class="output" th:text="*{lastName}">Simpson</span>
             </p>
             <p>
+                <label class="output-label">Date of Birth:</label>
+                <span class="output" th:text="*{#temporals.format(dateOfBirth, 'dd MMMM, yyyy')}">01 January, 2018</span>
+            </p>
+            <p>
+                <label class="output-label">Age:</label>
+                <span class="output" th:text="|*{age} years old|">18 years old</span>
+            </p>
+            <p>
                 <label class="output-label">Program:</label>
                 <span class="output" th:text="*{program.programName}">Computer Programmer</span>
             </p>

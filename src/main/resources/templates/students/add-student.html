@@ -27,7 +27,6 @@
             </ul>
         </div>
 
-        <h3 class="mt-4">Student Name</h3>
         <div class="mt-3 ms-4" style="max-width: 16rem;"
              th:with="fieldErrors=${#fields.hasErrors('firstName')}">
             <label for="first" class="group-label form-label">First Name</label>
@@ -44,7 +43,19 @@
                    th:classappend="${errors} ? ${fieldErrors?'is-invalid':'is-valid'}"/>
             <div th:if="${fieldErrors}" class="invalid-feedback" th:errors="*{lastName}">Last Name Error</div>
         </div>
-        <h3 class="mt-4">Student Info</h3>
+        <div class="mt-3 ms-4" style="max-width: 16rem;"
+             th:with="fieldErrors=${#fields.hasErrors('dateOfBirth')}">
+            <label for="dateOfBirth" class="group-label form-label">Date of Birth</label>
+            <input id="dateOfBirth" type="date" th:field="*{dateOfBirth}"
+                   class="form-control"
+                   th:classappend="${errors} ? ${fieldErrors?'is-invalid':'is-valid'}"
+                   min="1930-01-01"
+                   max="2030-12-31"
+                   required>
+            <div class="invalid-feedback" th:if="${#fields.hasErrors('dateOfBirth')}"
+                 th:errors="*{dateOfBirth}">
+            </div>
+        </div>
         <div class="mt-3 ms-4" style="max-width: 16rem;"
              th:with="fieldErrors=${#fields.hasErrors('program.id')}">
             <label for="prog" class="group-label form-label">Program</label><br>
