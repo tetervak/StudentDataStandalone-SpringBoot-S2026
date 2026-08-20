@@ -12,7 +12,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -45,7 +44,7 @@ public class StudentDataController {
     @GetMapping("/list-students")
     public ModelAndView listStudents() {
         log.trace("listStudents() is called");
-        List<Student> students = studentDataRepository.findAll();
+        List<Student> students = studentDataRepository.findAllSorted();
         log.debug("list size = {}", students.size());
         return new ModelAndView("students/list-students", "students", students);
     }
