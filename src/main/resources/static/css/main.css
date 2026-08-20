@@ -45,6 +45,9 @@ div.navigation-bar button:hover{
 }
 
 .output-label{
+    display: inline-block;
+    width: 6rem;
+    text-align: right;
     color: blueviolet;
 }
 
@@ -79,7 +82,7 @@ h3 {
 
 
 .student-card {
-    width: 18rem;
+    width: 20rem;
 }
 
 .student-card h3 {

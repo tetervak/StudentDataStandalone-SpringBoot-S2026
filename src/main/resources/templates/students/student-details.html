@@ -19,43 +19,43 @@
         <div th:object="${student}" class="card-body">
             <h3 class="card-title mb-4" th:text="|*{firstName} *{lastName}|">Student Name</h3>
             <p>
-                <label class="group-label">First Name:</label>
+                <label class="output-label">First Name:</label>
                 <span class="output" th:text="*{firstName}">Bart</span>
             </p>
             <p>
-                <label class="group-label">Last Name:</label>
+                <label class="output-label">Last Name:</label>
                 <span class="output" th:text="*{lastName}">Simpson</span>
             </p>
             <p>
-                <label class="group-label">Date of Birth:</label>
+                <label class="output-label">Date of Birth:</label>
                 <span class="output" th:text="*{#temporals.format(dateOfBirth, 'dd MMMM, yyyy')}">2000-01-01</span>
             </p>
             <p>
-                <label class="group-label">Age:</label>
+                <label class="output-label">Age:</label>
                 <span class="output" th:text="|*{age} years old|">18 years old</span>
             </p>
             <p>
-                <label class="group-label">Program:</label>
+                <label class="output-label">Program:</label>
                 <span class="output" th:text="*{program.programName}">Computer Programmer</span>
             </p>
             <p>
-                <label class="group-label">International:</label>
+                <label class="output-label">International:</label>
                 <span class="output" th:text="*{international}?'yes':'no'">no</span>
             </p>
             <p>
-                <label class="group-label">Year:</label>
+                <label class="output-label">Year:</label>
                 <span class="output" th:text="*{programYear}">1</span>
             </p>
             <p>
-                <label class="group-label">Co-op:</label>
+                <label class="output-label">Co-op:</label>
                 <span class="output" th:text="*{programCoop}?'yes':'no'">yes</span>
             </p>
             <p>
-                <label class="group-label">Created:</label>
+                <label class="output-label">Created:</label>
                 <span class="output" th:text="*{#temporals.format(createdAt, 'dd MMM yyyy HH:mm a')}">19 Aug 2026 21:38 p.m.</span>
             </p>
             <p>
-                <label class="group-label">Updated:</label>
+                <label class="output-label">Updated:</label>
                 <span class="output" th:text="*{#temporals.format(updatedAt, 'dd MMM yyyy HH:mm a')}">19 Aug 2026 21:38 p.m.</span>
             </p>
         </div>
