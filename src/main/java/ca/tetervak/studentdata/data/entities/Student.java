@@ -9,6 +9,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.Instant;
 
 @NoArgsConstructor
 @Getter
@@ -16,6 +21,7 @@ import lombok.ToString;
 @ToString
 @Entity
 @Table(name = "student")
+@EntityListeners(AuditingEntityListener.class) // automatically maintain creation and modification timestamps
 public class Student {
 
     @Column(name = "id")
@@ -47,4 +53,12 @@ public class Student {
 
     @Column(name = "program_coop")
     private Boolean programCoop = false;
+
+    @CreatedDate
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private Instant createdAt;          // or LocalDateTime / OffsetDateTime
+
+    @LastModifiedDate
+    @Column(name = "updated_at", nullable = false)
+    private Instant updatedAt;
 }

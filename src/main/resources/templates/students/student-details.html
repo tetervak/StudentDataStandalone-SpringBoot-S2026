@@ -42,6 +42,14 @@
                 <label class="group-label">Co-op:</label>
                 <span class="output" th:text="*{programCoop}?'yes':'no'">yes</span>
             </p>
+            <p>
+                <label class="group-label">Created:</label>
+                <span class="output" th:text="*{#temporals.format(createdAt, 'dd MMM yyyy HH:mm a')}">19 Aug 2026 21:38 p.m.</span>
+            </p>
+            <p>
+                <label class="group-label">Updated:</label>
+                <span class="output" th:text="*{#temporals.format(updatedAt, 'dd MMM yyyy HH:mm a')}">19 Aug 2026 21:38 p.m.</span>
+            </p>
         </div>
     </div>
     <div class="mt-4 btn-group" sec:authorize="hasRole('ADMIN')">

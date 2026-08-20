@@ -11,13 +11,17 @@ CREATE TABLE student (
     international BOOLEAN,
     program_year INTEGER,
     program_coop BOOLEAN,
+    created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(program_id) REFERENCES program(id)
 );
 
 CREATE TABLE app_user (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    user_name VARCHAR(15) UNIQUE NOT NULL,
-    password_hash VARCHAR(128) NOT NULL
+    username VARCHAR(15) UNIQUE NOT NULL,
+    password_hash VARCHAR(128) NOT NULL,
+    first_name VARCHAR(30),
+    last_name VARCHAR(30)
 );
 
 CREATE TABLE app_role (

@@ -22,7 +22,7 @@ public class AppUser {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "user_name", unique = true, nullable = false)
+    @Column(name = "username", unique = true, nullable = false)
     @NotBlank
     @Size(max = 30)
     private String username = "";

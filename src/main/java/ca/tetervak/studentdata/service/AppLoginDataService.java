@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -30,7 +31,7 @@ public class AppLoginDataService{
 
 
     public boolean userExists(String userName) {
-        return userDataRepository.findByUserName(userName) != null;
+        return userDataRepository.findByUsername(userName) != null;
     }
 
 
@@ -42,7 +43,7 @@ public class AppLoginDataService{
     }
 
     public void insertRole(String userName, String roleName) {
-        AppUser user = userDataRepository.findByUserName(userName);
+        AppUser user = userDataRepository.findByUsername(userName);
         if(user != null){
             AppRole role = roleDataRepository.findByRoleName(roleName);
             if(role != null){
@@ -53,13 +54,13 @@ public class AppLoginDataService{
     }
 
     public void removeUser(String userName) {
-        userDataRepository.deleteByUserName(userName);
+        userDataRepository.deleteByUsername(userName);
     }
 
     public void removeRole(String userName, String roleName) {
-        AppUser user = userDataRepository.findByUserName(userName);
+        AppUser user = userDataRepository.findByUsername(userName);
         if(user != null){
-            List<AppRole> roles = user.getRoles();
+            Set<AppRole> roles = user.getRoles();
             for(AppRole role: roles){
                 if(role.getRoleName().equals(roleName)){
                     roles.remove(role);
@@ -71,7 +72,7 @@ public class AppLoginDataService{
     }
 
     public void removeRoles(String userName) {
-        AppUser user = userDataRepository.findByUserName(userName);
+        AppUser user = userDataRepository.findByUsername(userName);
         if(user != null) {
             user.getRoles().clear();
             userDataRepository.save(user);
@@ -92,9 +93,9 @@ public class AppLoginDataService{
 
     public List<String> getAllRoleNames(String userName) {
         List<String> roleNames = new ArrayList<>();
-        AppUser user = userDataRepository.findByUserName(userName);
+        AppUser user = userDataRepository.findByUsername(userName);
         if(user != null){
-            List<AppRole> roles = user.getRoles();
+            Set<AppRole> roles = user.getRoles();
             for(AppRole role: roles){
                 roleNames.add(role.getRoleName());
             }
@@ -104,7 +105,7 @@ public class AppLoginDataService{
     }
 
     public void updatePassword(String userName, String password) {
-        AppUser user = userDataRepository.findByUserName(userName);
+        AppUser user = userDataRepository.findByUsername(userName);
         if(user != null){
             user.setPasswordHash(passwordEncoder.encode(password));
             userDataRepository.save(user);
@@ -121,7 +122,7 @@ public class AppLoginDataService{
     }
 
     public String getPassword(String userName) {
-        AppUser user = userDataRepository.findByUserName(userName);
+        AppUser user = userDataRepository.findByUsername(userName);
         if(user != null){
             return user.getPasswordHash();
         }else{
