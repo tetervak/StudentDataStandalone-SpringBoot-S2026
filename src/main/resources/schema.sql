@@ -17,7 +17,7 @@ CREATE TABLE student (
 CREATE TABLE app_user (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_name VARCHAR(15) UNIQUE NOT NULL,
-    password VARCHAR(128) NOT NULL
+    password_hash VARCHAR(128) NOT NULL
 );
 
 CREATE TABLE app_role (
