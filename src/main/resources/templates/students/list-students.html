@@ -18,11 +18,11 @@
     <table th:unless="${#lists.isEmpty(students)}" class="ms-4 table table-striped table-bordered w-auto">
         <thead>
             <tr class="table-primary">
-                <th class="text-center">Count</th>
+                <th class="text-center align-middle">Count</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Program</th>
-                <th class="text-center">Options</th>
+                <th class="align-middle">Program</th>
+                <th class="text-center align-middle">Options</th>
             </tr>
         </thead>
         <tbody>
@@ -42,7 +42,7 @@
         </tbody>
     </table>
     <div th:if="${#lists.isEmpty(students)}" class="alert alert-warning ms-4" role="alert" style="width: 25rem;">
-        <span class="message">No student data</span>
+        <span class="text-warning">No student data</span>
     </div>
 
     <div sec:authorize="hasRole('ADMIN')" class="mt-4">
