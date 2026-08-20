@@ -1,10 +1,7 @@
 package ca.tetervak.studentdata.data.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +11,7 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @Getter
@@ -38,6 +36,10 @@ public class Student {
     @NotBlank
     @Size(max = 30)
     private String lastName = "";
+
+    @Column(name = "date_of_birth", nullable = false)
+    @Past
+    private LocalDate dateOfBirth;
 
     @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "program_id", nullable = false)

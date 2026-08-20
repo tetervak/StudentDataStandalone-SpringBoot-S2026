@@ -5,27 +5,27 @@ VALUES ('Computer Programmer'),
        ('Engineering Technician');
 
 INSERT INTO student
-(first_name, last_name, program_id, international, program_year, program_coop)
-VALUES ('Harry', 'Potter', 1, false, 1, true),
-       ('Ronald', 'Weasley', 2, true, 2, false),
-       ('Hermione', 'Granger', 2, false, 1, false),
-       ('Draco', 'Malfoy', 3, true, 2, true),
-       ('George', 'Weasley', 2, true, 2, false),
-       ('Fred', 'Weasley', 2, false, 1, false),
-       ('Ginny', 'Weasley', 3, true, 2, true),
-       ('Neville', 'Longbottom', 1, false, 1, false),
-       ('Vincent', 'Crabbe', 1, true, 1, true),
-       ('Gregory', 'Goyle', 3, false, 1, false),
-       ('Pansy','Parkinson', 1, true, 2, true),
-       ('Blaise', 'Zabini', 2, false, 1, false),
-       ('Luna', 'Lovegood', 3, true, 2, true),
-       ('Cho', 'Chang', 2, true, 2, false),
-       ('Padma', 'Patil', 3, false, 1, false),
-       ('Terry', 'Boot', 2, false, 2, false),
-       ('Cedric', 'Diggory', 1, false, 2, true),
-       ('Hannah', 'Abbott', 2, true, 2, false),
-       ('Ernie', 'Macmillan', 3, false, 1, false),
-       ('Justin', 'Finch-Fletchley', 2, true, 2, true);
+(first_name, last_name, date_of_birth, program_id, international, program_year, program_coop)
+VALUES ('Harry', 'Potter', '2018-07-15',1, false, 1, true),
+       ('Ronald', 'Weasley', '2017-03-10', 2, true, 2, false),
+       ('Hermione', 'Granger', '2018-11-05', 2, false, 1, false),
+       ('Draco', 'Malfoy', '2017-02-14', 3, true, 2, true),
+       ('George', 'Weasley', '2017-04-18', 2, true, 2, false),
+       ('Fred', 'Weasley', '2018-12-30',  2, false, 1, false),
+       ('Ginny', 'Weasley', '2017-05-16', 3, true, 2, true),
+       ('Neville', 'Longbottom', '2018-03-07', 1, false, 1, false),
+       ('Vincent', 'Crabbe', '2018-08-09', 1, true, 1, true),
+       ('Gregory', 'Goyle', '2018-04-19', 3, false, 1, false),
+       ('Pansy','Parkinson', '2017-01-11', 1, true, 2, true),
+       ('Blaise', 'Zabini', '2018-09-25', 2, false, 1, false),
+       ('Luna', 'Lovegood', '2017-10-21', 3, true, 2, true),
+       ('Cho', 'Chang', '2017-01-08', 2, true, 2, false),
+       ('Padma', 'Patil', '2018-09-10', 3, false, 1, false),
+       ('Terry', 'Boot', '2017-11-29', 2, false, 2, false),
+       ('Cedric', 'Diggory', '2017-03-20', 1, false, 2, true),
+       ('Hannah', 'Abbott', '2017-01-24', 2, true, 2, false),
+       ('Ernie', 'Macmillan', '2018-07-12', 3, false, 1, false),
+       ('Justin', 'Finch-Fletchley', '2017-10-08', 2, true, 2, true);
 
 /* all these passwords are "sesame" */
 INSERT INTO app_user

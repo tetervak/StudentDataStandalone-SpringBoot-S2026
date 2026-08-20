@@ -7,6 +7,7 @@ CREATE TABLE student (
     id INT AUTO_INCREMENT PRIMARY KEY,
     first_name VARCHAR(30),
     last_name VARCHAR(30),
+    date_of_birth DATE NOT NULL,
     program_id INTEGER NOT NULL,
     international BOOLEAN,
     program_year INTEGER,
