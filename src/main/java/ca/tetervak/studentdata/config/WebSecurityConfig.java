@@ -25,12 +25,10 @@ public class WebSecurityConfig {
                 (authorize) -> authorize
                         .requestMatchers(
                         "/css/**", "/webjars/**", "/", "/index",
-                                "/error","/.well-known/**", "/h2-console/**")
-                        .permitAll()
-                        .requestMatchers("/users/**")
-                        .hasRole("ADMIN")
-                        .anyRequest()
-                        .authenticated()
+                                "/error","/.well-known/**", "/h2-console/**").permitAll()
+                        .requestMatchers("/users/**").hasRole("USER_ADMIN")
+                        .requestMatchers("/students/**").hasAnyRole("DATA_ADMIN", "DATA_USER")
+                        .anyRequest().authenticated()
         );
 
         // 1. Ignore CSRF protection specifically for the H2 console path

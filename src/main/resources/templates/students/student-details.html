@@ -60,12 +60,12 @@
             </p>
         </div>
     </div>
-    <div class="mt-4 btn-group" sec:authorize="hasRole('ADMIN')">
+    <div class="mt-4 btn-group" sec:authorize="hasRole('DATA_ADMIN')">
         <a th:href="@{/students/edit-student(id=${student.id})}" class="btn btn-outline-success"><i class="bi bi-pen me-2"></i>Edit Student</a>
         <a th:href="@{/students/delete-student(id=${student.id})}" class="btn btn-outline-danger"><i class="bi bi-trash me-2"></i>Delete Student</a>
     </div>
     <ul class="mt-4 list-group list-group-horizontal">
-        <li sec:authorize="hasRole('ADMIN')" class="list-group-item">
+        <li sec:authorize="hasRole('DATA_ADMIN')" class="list-group-item">
             <a th:href="@{/students/add-student}"><i class="bi bi-plus me-2"></i>Add Student</a>
         </li>
         <li class="list-group-item">

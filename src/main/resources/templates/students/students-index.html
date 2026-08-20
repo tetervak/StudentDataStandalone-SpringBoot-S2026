@@ -16,7 +16,7 @@
 <main class="container">
     <h2 class="mt-4 mb-3">Students Index</h2>
     <ul class="list-group ms-3" style="width: 12rem;">
-        <li class="list-group-item" sec:authorize="hasRole('ADMIN')">
+        <li class="list-group-item" sec:authorize="hasRole('DATA_ADMIN')">
             <a th:href="@{/students/add-student}"><i class="bi bi-plus me-2"></i>Add Student</a>
         </li>
         <li class="list-group-item">

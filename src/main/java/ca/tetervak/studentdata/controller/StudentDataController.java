@@ -5,6 +5,7 @@ import ca.tetervak.studentdata.data.entities.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -49,7 +50,7 @@ public class StudentDataController {
         return new ModelAndView("students/list-students", "students", students);
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('DATA_ADMIN')")
     @GetMapping("/add-student")
     public ModelAndView addStudent(){
         log.trace("addStudent() is called");
@@ -62,7 +63,7 @@ public class StudentDataController {
         return modelAndView;
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('DATA_ADMIN')")
     @PostMapping("/insert-student")
     public String insertStudent(
             @Validated @ModelAttribute Student student,
@@ -91,7 +92,7 @@ public class StudentDataController {
         }
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('DATA_ADMIN')")
     @GetMapping("/confirm-insert/{id}")
     public String confirmInsert(@PathVariable String id, Model model){
         log.trace("confirmInsert() is called");
@@ -113,7 +114,7 @@ public class StudentDataController {
         }
     }
 
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('DATA_ADMIN')")
     @PostMapping("/delete-all")
     public String deleteAll(){
         log.trace("deleteAll() is called");
@@ -139,7 +140,7 @@ public class StudentDataController {
     }
 
     // a user clicks "Delete" link (in the table) to "DeleteStudent"
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('DATA_ADMIN')")
     @GetMapping("/delete-student")
     public String deleteStudent(@RequestParam String id, Model model) {
         log.trace("deleteStudent() is called");
@@ -159,7 +160,7 @@ public class StudentDataController {
 
     // a user clicks "Remove Record" button on "DeleteStudent" page,
     // the form submits the data to "RemoveStudent"
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('DATA_ADMIN')")
     @PostMapping("/remove-student")
     public String removeStudent(@RequestParam String id) {
         log.trace("removeStudent() is called");
@@ -174,7 +175,7 @@ public class StudentDataController {
     }
 
     // a user clicks "Edit" link (in the table) to "EditStudent"
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('DATA_ADMIN')")
     @GetMapping("/edit-student")
     public String editStudent(@RequestParam String id, Model model) {
         log.trace("editStudent() is called");
@@ -195,7 +196,7 @@ public class StudentDataController {
     }
 
     // the form submits the data to "UpdateStudent"
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('DATA_ADMIN')")
     @PostMapping("/update-student")
     public String updateStudent(
             @Validated @ModelAttribute Student student,

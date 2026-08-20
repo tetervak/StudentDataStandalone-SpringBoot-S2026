@@ -16,10 +16,10 @@
         <div>
             <a th:href="@{/index}"><i class="bi bi-house-door me-2"></i>Home</a>
         </div>
-        <div sec:authorize="isAuthenticated()">
+        <div sec:authorize="hasAnyRole('DATA_ADMIN', 'DATA_USER')">
             <a th:href="@{/students/index}"><i class="bi bi-mortarboard me-2"></i>Students</a>
         </div>
-        <div sec:authorize="hasRole('ADMIN')">
+        <div sec:authorize="hasRole('USER_ADMIN')">
             <a th:href="@{/users/index}"><i class="bi bi-people me-2"></i>Users</a>
         </div>
         <div sec:authorize="isAnonymous()">
@@ -34,14 +34,14 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">Home</h2>
-    <ul sec:authorize="isAuthenticated()">
-        <li>
+    <ul>
+        <li sec:authorize="hasAnyRole('DATA_ADMIN', 'DATA_USER')">
             <a th:href="@{/students/index}">Students</a>
         </li>
-        <li sec:authorize="hasRole('ADMIN')">
+        <li sec:authorize="hasRole('USER_ADMIN')">
             <a th:href="@{/users/index}">Users</a>
         </li>
-        <li>
+        <li sec:authorize="isAuthenticated()">
             <a th:href="@{/password/change-password}">Change Password</a>
         </li>
     </ul>
