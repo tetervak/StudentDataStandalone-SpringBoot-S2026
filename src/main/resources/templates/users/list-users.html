@@ -15,20 +15,25 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">User List</h2>
-    <h3 class="mt-4 mb-2 ms-4">Role: User</h3>
     <p th:if="${#lists.isEmpty(users)}" class="message">No user accounts yet.</p>
     <table th:unless="${#lists.isEmpty(users)}" class="ms-4 table table-striped table-bordered w-auto">
         <thead>
             <tr class="table-primary">
-                <th>Count</th>
-                <th>Username</th>
+                <th class="text-center align-middle">Count</th>
+                <th class="text-center align-middle">Username</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Authorization Roles</th>
                 <th>Delete</th>
             </tr>
         </thead>
         <tbody>
             <tr th:each="u,c:${users}">
-                <td th:text="${c.count}">1</td>
-                <td th:text="${u}">bart</td>
+                <td class="text-center" th:text="${c.count}">1</td>
+                <td class="text-center" th:text="${u.username}">bart</td>
+                <td th:text="${u.firstName}">Bart</td>
+                <td th:text="${u.lastName}">Simpson</td>
+                <td th:text="${u.getPrettyRoleNames()}">ROLE_USER</td>
                 <td><a th:href="@{delete-user(login=${u})}"><i class="me-2 bi bi-trash"></i>Delete</a></td>
             </tr>
         </tbody>

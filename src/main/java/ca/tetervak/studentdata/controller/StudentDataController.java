@@ -66,7 +66,7 @@ public class StudentDataController {
     @PreAuthorize("hasRole('DATA_ADMIN')")
     @PostMapping("/insert-student")
     public String insertStudent(
-            @Validated @ModelAttribute Student student,
+            @Validated @ModelAttribute("student") Student student,
             BindingResult bindingResult,
             Model model
     ){

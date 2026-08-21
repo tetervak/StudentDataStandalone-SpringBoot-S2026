@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -20,7 +21,7 @@ public class AppUser {
     @Column(name = "id")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer id = null;
 
     @Column(name = "username", unique = true, nullable = false)
     @NotBlank
@@ -47,4 +48,8 @@ public class AppUser {
             joinColumns={@JoinColumn(name="user_id", referencedColumnName="id")},
             inverseJoinColumns={@JoinColumn(name="role_id", referencedColumnName="id")})
     private Set<AppRole> roles = new HashSet<>(2);
+
+    public List<String> getPrettyRoleNames() {
+        return roles.stream().map(AppRole::toPrettyString).toList();
+    }
 }

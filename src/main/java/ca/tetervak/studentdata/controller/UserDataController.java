@@ -1,29 +1,30 @@
 package ca.tetervak.studentdata.controller;
 
-import ca.tetervak.studentdata.service.AppLoginDataService;
+import ca.tetervak.studentdata.model.AddUserForm;
+import ca.tetervak.studentdata.service.AppUserDataService;
 import ca.tetervak.studentdata.passwords.PasswordGenerator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 @Slf4j
 @Controller
 @RequestMapping("/users")
 public class UserDataController {
 
-    private final AppLoginDataService loginDataService;
+    private final AppUserDataService userDataService;
     private final PasswordGenerator passwordGenerator;
 
     public UserDataController(
-            AppLoginDataService loginDataService,
+            AppUserDataService userDataService,
             PasswordGenerator passwordGenerator
     ) {
-        this.loginDataService = loginDataService;
+        this.userDataService = userDataService;
         this.passwordGenerator = passwordGenerator;
     }
 
@@ -40,10 +41,7 @@ public class UserDataController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         assert authentication != null;
         model.addAttribute("you", authentication.getName());
-        model.addAttribute("users",
-                loginDataService.getAllUserNames("ROLE_USER"));
-        model.addAttribute("admins",
-                loginDataService.getAllUserNames("ROLE_ADMIN"));
+        model.addAttribute("users", userDataService.getAllUsers());
         return "users/list-users";
     }
 
@@ -51,8 +49,9 @@ public class UserDataController {
     @GetMapping("/add-user")
     public String addUser(Model model) {
         log.trace("addUser() is called");
-        String message = "Enter login and password for the new user account.";
-        model.addAttribute("message", message);
+        AddUserForm user = new AddUserForm();
+        user.setPassword(passwordGenerator.randomPassword());
+        model.addAttribute("user", user);
         model.addAttribute("random", passwordGenerator.randomPassword());
         return "users/add-user";
     }
@@ -61,45 +60,29 @@ public class UserDataController {
     // the form submits the data to "InsertUser"
     @PostMapping("/insert-user")
     public String insertUser(
-            @RequestParam String login,
-            @RequestParam String password,
-            @RequestParam String role,
+            @Validated @ModelAttribute("user") AddUserForm user,
+            BindingResult bindingResult,
             Model model
     ) {
         log.trace("insertUser() is called");
-        log.debug("login = {}", login);
-        log.debug("password = {}", login);
-        log.debug("role = {}", role);
-        String message;
-        if (login == null || login.trim().isEmpty()) {
-            log.trace("missing login input");
-            message = "The account login cannot be left empty";
-        } else if (loginDataService.userExists(login)) {
-            log.trace("the login is already in use");
-            message = "The login is already in use.";
-        } else if (password == null || password.trim().isEmpty()) {
-            log.trace("missing password input");
-            message = "The account password cannot be left empty.";
-        } else {
-            login = login.trim();
-            password = password.trim();
-            loginDataService.insertUser(login, password);
-            log.trace("added user {}", login);
-            model.addAttribute("login",login);
-            if(role != null && role.equals("admin")){
-                loginDataService.insertRole(login, "ROLE_ADMIN");
-                log.trace("added ROLE_ADMIN to {}", login);
-                model.addAttribute("role","admin");
-            }else{
-                loginDataService.insertRole(login, "ROLE_USER");
-                log.trace("added ROLE_USER to {}", login);
-                model.addAttribute("role","user");
+        log.debug("insertUser: user = {}", user);
+
+        if (!bindingResult.hasFieldErrors("currentPassword")) {
+            if(userDataService.userExists(user.getUsername())) {
+                bindingResult.rejectValue("username", "username.exists");
+                log.trace("Entered username already exists");
             }
-            return "users/user-added";
         }
-        model.addAttribute("message", message);
-        model.addAttribute("random", passwordGenerator.randomPassword());
-        return "users/add-user";
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            return "users/add-user";
+        }
+
+        userDataService.addUser(user);
+        log.trace("User added");
+
+        return "users/user-added";
     }
 
     // an admin clicks "Delete" link in "list-users.html",
@@ -115,8 +98,8 @@ public class UserDataController {
     // the form submits the data to "RemoveUser"
     @PostMapping("/remove-user")
     public String removeUser(@RequestParam String login) {
-        loginDataService.removeRoles(login);
-        loginDataService.removeUser(login);
+//        userDataService.removeRoles(login);
+//        userDataService.removeUser(login);
         return "redirect:/users/list-users";
     }
 }

@@ -2,7 +2,7 @@ package ca.tetervak.studentdata.controller;
 
 import ca.tetervak.studentdata.passwords.PasswordChangeForm;
 import ca.tetervak.studentdata.passwords.PasswordChangeValidator;
-import ca.tetervak.studentdata.service.AppLoginDataService;
+import ca.tetervak.studentdata.service.AppUserDataService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,16 +13,14 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-
 @Slf4j
 @Controller
 @RequestMapping("/password")
 public class PasswordDataController {
 
-    private final AppLoginDataService loginDataService;
+    private final AppUserDataService loginDataService;
 
-    public PasswordDataController(AppLoginDataService loginDataService) {
+    public PasswordDataController(AppUserDataService loginDataService) {
         this.loginDataService = loginDataService;
     }
 
