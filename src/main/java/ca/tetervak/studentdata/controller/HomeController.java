@@ -1,6 +1,10 @@
 package ca.tetervak.studentdata.controller;
 
+import ca.tetervak.studentdata.data.entities.AppUser;
+import ca.tetervak.studentdata.service.AppUserDataService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +17,24 @@ import java.time.LocalDate;
 @Controller
 public class HomeController {
 
+    private final AppUserDataService userDataService;
+
+    public HomeController(AppUserDataService userDataService) {
+        this.userDataService = userDataService;
+    }
+
     @GetMapping(value={"/", "/index"})
-    public String index(){
+    public String index(Model model){
         log.trace("index() is called");
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if(authentication != null){
+            String username = authentication.getName();
+            log.debug("index: username = [{}]", username);
+            if(!username.equals("anonymousUser")){
+                AppUser user = userDataService.getUserByUsername(username).orElseThrow();
+                model.addAttribute("user", user);
+            }
+        }
         return "home/index";
     }
 
