@@ -24,16 +24,16 @@ public class HomeController {
     }
 
     @GetMapping(value={"/", "/index"})
-    public String index(Model model){
+    public String index(
+            Authentication authentication,
+            Model model
+    ){
         log.trace("index() is called");
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if(authentication != null){
+        if(authentication != null && authentication.isAuthenticated()){
             String username = authentication.getName();
             log.debug("index: username = [{}]", username);
-            if(!username.equals("anonymousUser")){
-                AppUser user = userDataService.getUserByUsername(username).orElseThrow();
-                model.addAttribute("user", user);
-            }
+            AppUser user = userDataService.getUserByUsername(username).orElse(null);
+            model.addAttribute("user", user);
         }
         return "home/index";
     }
@@ -48,7 +48,6 @@ public class HomeController {
         if(error){
             log.debug("Login error");
         }
-
         return "home/login";
     }
 }

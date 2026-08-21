@@ -34,7 +34,7 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">Home</h2>
-    <div sec:authorize="isAuthenticated()"
+    <div sec:authorize="isAuthenticated()" th:if="${user != null}"
          class="alert alert-success ms-2" role="alert"
          style="width: 22rem; font-size: larger">
         Welcome,&nbsp;<span th:text="|${user.firstName} ${user.lastName}|">Bart Simpson</span>!
