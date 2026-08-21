@@ -13,8 +13,4 @@ public interface AppUserDataRepository extends JpaRepository<AppUser, Integer> {
     Optional<AppUser> findByUsername(String userName);
 
     void deleteByUsername(String useName);
-
-    @Query("SELECT u FROM AppUser u JOIN FETCH u.roles")
-    List<AppUser> findAllWithRoles();
-
 }
