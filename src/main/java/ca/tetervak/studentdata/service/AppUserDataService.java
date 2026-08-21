@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,7 +62,11 @@ public class AppUserDataService implements UserDetailsService {
         return userDataRepository.findByUsername(userName).isPresent();
     }
 
-    public int addUser(AddUserForm form) {
+    public Optional<AppUser> getUserByUsername(String username) {
+        return userDataRepository.findByUsername(username);
+    }
+
+    public AppUser addUser(@NonNull AddUserForm form) {
         AppUser user = new AppUser();
         user.setUsername(form.getUsername());
         user.setPasswordHash(passwordEncoder.encode(form.getPassword()));
@@ -79,13 +84,11 @@ public class AppUserDataService implements UserDetailsService {
             AppRole dataUserRole = roleDataRepository.findByRoleName("DATA_USER").orElseThrow();
             user.getRoles().add(dataUserRole);
         }
-        AppUser savedUser = userDataRepository.save(user);
-        return savedUser.getId();
+        return userDataRepository.save(user);
     }
 
     public void updateUser(EditUserForm form){
         AppUser user = userDataRepository.findById(form.getId()).orElseThrow();
-        user.setUsername(form.getUsername());
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         AppRole userAdminRole = roleDataRepository.findByRoleName("USER_ADMIN").orElseThrow();
@@ -107,6 +110,21 @@ public class AppUserDataService implements UserDetailsService {
             user.getRoles().remove(dataUserRole);
         }
         userDataRepository.save(user);
+    }
+
+    public EditUserForm getEditUserFormByUsername(String username) {
+        AppUser user = userDataRepository.findByUsername(username).orElseThrow();
+        EditUserForm form = new EditUserForm();
+        form.setId(user.getId());
+        form.setFirstName(user.getFirstName());
+        form.setLastName(user.getLastName());
+        AppRole userAdminRole = roleDataRepository.findByRoleName("USER_ADMIN").orElseThrow();
+        AppRole dataAdminRole = roleDataRepository.findByRoleName("DATA_ADMIN").orElseThrow();
+        AppRole dataUserRole = roleDataRepository.findByRoleName("DATA_USER").orElseThrow();
+        form.setUserAdmin(user.getRoles().contains(userAdminRole));
+        form.setDataAdmin(user.getRoles().contains(dataAdminRole));
+        form.setDataUser(user.getRoles().contains(dataUserRole));
+        return form;
     }
 
     public void removeUser(String userName) {

@@ -1,6 +1,8 @@
 package ca.tetervak.studentdata.controller;
 
+import ca.tetervak.studentdata.data.entities.AppUser;
 import ca.tetervak.studentdata.model.AddUserForm;
+import ca.tetervak.studentdata.model.EditUserForm;
 import ca.tetervak.studentdata.service.AppUserDataService;
 import ca.tetervak.studentdata.passwords.PasswordGenerator;
 import lombok.extern.slf4j.Slf4j;
@@ -66,38 +68,62 @@ public class UserDataController {
     ) {
         log.trace("insertUser() is called");
         log.debug("insertUser: user = {}", user);
-
         if (!bindingResult.hasFieldErrors("currentPassword")) {
             if(userDataService.userExists(user.getUsername())) {
                 bindingResult.rejectValue("username", "username.exists");
                 log.trace("Entered username already exists");
             }
         }
-
         if (bindingResult.hasErrors()) {
             model.addAttribute("user", user);
             return "users/add-user";
         }
-
-        userDataService.addUser(user);
+        AppUser savedUser = userDataService.addUser(user);
         log.trace("User added");
+        return "redirect:/users/user-added/" + savedUser.getUsername();
+    }
 
+    @GetMapping("/user-added/{username}")
+    public String userAdded(@PathVariable String username, Model model) {
+        AppUser user = userDataService.getUserByUsername(username).orElseThrow();
+        model.addAttribute("user", user);
         return "users/user-added";
+    }
+
+    @GetMapping("/edit-user")
+    public String editUser(@RequestParam String username, Model model) {
+        EditUserForm form = userDataService.getEditUserFormByUsername(username);
+        model.addAttribute("user", form);
+        return "users/edit-user";
+    }
+
+    @PostMapping("/update-user")
+    public String updateUser(
+            @ModelAttribute("user") EditUserForm user,
+            BindingResult result,
+            Model model
+    ) {
+        if (result.hasErrors()) {
+            model.addAttribute("user", user);
+            return "users/edit-user";
+        }
+        userDataService.updateUser(user);
+        return "redirect:/users/list-users";
     }
 
     // an admin clicks "Delete" link in "list-users.html",
     @GetMapping("/delete-user")
-    public String deleteUser(@RequestParam String login, Model model) {
+    public String deleteUser(@RequestParam String username, Model model) {
         log.trace("deleteUser() is called");
-        log.debug("deleteUser: login = {}", login);
-        model.addAttribute("user", login);
+        log.debug("deleteUser: username = {}", username);
+        model.addAttribute("user", username);
         return "users/delete-user";
     }
 
     // an admin clicks on "Delete User" button in "DeleteUser.jsp",
     // the form submits the data to "RemoveUser"
     @PostMapping("/remove-user")
-    public String removeUser(@RequestParam String login) {
+    public String removeUser(@RequestParam String username) {
 //        userDataService.removeRoles(login);
 //        userDataService.removeUser(login);
         return "redirect:/users/list-users";

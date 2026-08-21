@@ -85,7 +85,15 @@ h3 {
     width: 20rem;
 }
 
+.user-card {
+    width: 20rem;
+}
+
 .student-card h3 {
+    color: darkgreen;
+}
+
+.user-card h3 {
     color: darkgreen;
 }
 

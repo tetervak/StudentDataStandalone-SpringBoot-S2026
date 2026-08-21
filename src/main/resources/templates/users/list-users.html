@@ -19,12 +19,12 @@
     <table th:unless="${#lists.isEmpty(users)}" class="ms-4 table table-bordered w-auto">
         <thead>
             <tr class="table-primary">
-                <th class="text-center align-middle">Count</th>
-                <th class="text-center align-middle">Username</th>
+                <th class="text-center">Count</th>
+                <th class="text-center">Username</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Authorization Roles</th>
-                <th>Delete</th>
+                <th class="text-center">Authorization Roles</th>
+                <th class="text-center">Options</th>
             </tr>
         </thead>
         <tbody>
@@ -33,8 +33,11 @@
                 <td class="text-center" th:text="${u.username}">bart</td>
                 <td th:text="${u.firstName}">Bart</td>
                 <td th:text="${u.lastName}">Simpson</td>
-                <td th:text="${u.getPrettyRoleNames()}">ROLE_USER</td>
-                <td><a th:href="@{delete-user(login=${u})}"><i class="me-2 bi bi-trash"></i>Delete</a></td>
+                <td class="text-center" th:text="${u.getPrettyRoleNames()}">ROLE_USER</td>
+                <td class="text-center">
+                    <a th:href="@{/users/edit-user(username=${u.username})}"><i class="bi bi-pen"></i></a>
+                    <a th:href="@{/users/delete-user(username=${u.username})}"><i class="ms-2 bi bi-trash"></i></a>
+                </td>
             </tr>
         </tbody>
     </table>

@@ -15,10 +15,6 @@ public class EditUserForm {
     private Integer id = null;
 
     @NotBlank
-    @Size(min = 4, max = 15, message = "Username must be between 4 and 15 characters")
-    private String username = "";
-
-    @NotBlank
     @Size(max = 30, message = "First name must be no more than 30 characters")
     private String firstName = "";
 
