@@ -15,18 +15,32 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">Delete User</h2>
-    <p class="message">
-        Do you really want to remove <span th:text="${user}" class="user">simpson</span> user account?
-    </p>
-    <form action="list-users.html" th:action="@{remove-user}" method="post">
-        <input type="hidden" name="login" th:value="${user}">
-        <p>
-            <input type="submit" value="Delete User">
-        </p>
+    <div class="alert alert-danger ms-2" role="alert" style="width: 26rem;">
+        <span class="text-danger align-middle">
+            Do you really want to remove this user account?
+        </span>
+    </div>
+    <div class="card ms-4 user-card">
+        <div th:object="${user}" class="card-body">
+            <h3 class="card-title" th:text="|*{firstName} *{lastName}|">Bart Simpson</h3>
+            <p>
+                <span th:unless="*{#lists.isEmpty(prettyRoleNames)}" th:text="*{prettyRoleNames}" style="color:orchid">[Data Admin, User Admin]</span>
+                <span th:if="*{#lists.isEmpty(prettyRoleNames)}" style="color:orchid">No Authorization Roles</span>
+            </p>
+            <p>
+                <label class="output-label">Username:</label>
+                <span class="output" th:text="*{username}">bart</span>
+            </p>
+        </div>
+    </div>
+    <form th:action="@{/users/remove-user}" method="post">
+        <input type="hidden" name="username" th:value="${user.username}">
+        <div class="mt-4 btn-group">
+            <button type="submit" class="btn btn-danger"><i class="bi bi-check-lg me-2"></i>Remove User</button>
+            <a th:href="@{/users/list-users}" class="btn btn-outline-secondary"><i class="bi bi-x-lg me-2"></i>Cancel</a>
+        </div>
     </form>
-    <p>
-        <a href="list-users.html" th:href="@{list-users}">List Users</a>
-    </p>
+    <a th:href="@{/users/list-users}" class="mt-4 btn btn-outline-primary"><i class="bi bi-list-ul me-2"></i>List Users</a>
 </main>
 <footer th:replace="~{home/index::footer}">
     Some footer text

@@ -116,16 +116,16 @@ public class UserDataController {
     public String deleteUser(@RequestParam String username, Model model) {
         log.trace("deleteUser() is called");
         log.debug("deleteUser: username = {}", username);
-        model.addAttribute("user", username);
+        AppUser user = userDataService.getUserByUsername(username).orElseThrow();
+        model.addAttribute("user", user);
         return "users/delete-user";
     }
 
-    // an admin clicks on "Delete User" button in "DeleteUser.jsp",
+    // an admin clicks on "Delete User" button
     // the form submits the data to "RemoveUser"
     @PostMapping("/remove-user")
     public String removeUser(@RequestParam String username) {
-//        userDataService.removeRoles(login);
-//        userDataService.removeUser(login);
+        userDataService.removeUser(username);
         return "redirect:/users/list-users";
     }
 }

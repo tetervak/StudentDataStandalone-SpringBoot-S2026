@@ -20,7 +20,7 @@
           th:object="${user}">
 
         <div th:if="${errors}" class="alert alert-danger ms-2" role="alert" style="width: 18rem;">
-            <h3 class="error card-title mb-2" >Input Errors</h3>
+            <h3 class="error card-title mb-2">Input Errors</h3>
             <ul>
                 <li th:each="e: ${#fields.errors('*')}" th:text="${e}"
                     class="error">Input Error</li>
