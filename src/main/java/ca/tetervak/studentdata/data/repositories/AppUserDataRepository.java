@@ -13,4 +13,6 @@ public interface AppUserDataRepository extends JpaRepository<AppUser, Integer> {
     Optional<AppUser> findByUsername(String userName);
 
     void deleteByUsername(String useName);
+
+    List<AppUser> findAllByOrderByUsername();
 }

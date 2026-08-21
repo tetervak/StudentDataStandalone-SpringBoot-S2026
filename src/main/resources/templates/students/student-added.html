@@ -7,14 +7,14 @@
     <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/main.css}">
-    <title>Confirm Insert</title>
+    <title>Student Added</title>
 </head>
 <body>
 <header th:replace="~{home/index::header}">
     <h1>Some header text</h1>
 </header>
 <main class="container">
-    <h2 class="mt-4 mb-3">Confirm Insert</h2>
+    <h2 class="mt-4 mb-3">Student Added</h2>
     <div class="card ms-4 student-card">
         <div th:object="${student}" class="card-body">
             <h3 class="card-title mb-4" th:text="|*{firstName} *{lastName}|">Student Name</h3>

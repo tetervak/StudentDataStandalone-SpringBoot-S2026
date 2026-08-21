@@ -15,12 +15,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class AppUserDataService implements UserDetailsService {
 
     private final AppUserDataRepository userDataRepository;
@@ -38,7 +37,6 @@ public class AppUserDataService implements UserDetailsService {
 
     @Override
     @NonNull
-    @Transactional
     public UserDetails loadUserByUsername(@NonNull String username) throws UsernameNotFoundException {
         AppUser user = userDataRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
@@ -56,7 +54,7 @@ public class AppUserDataService implements UserDetailsService {
     }
 
     public List<AppUser> getAllUsers() {
-        return userDataRepository.findAll();
+        return userDataRepository.findAllByOrderByUsername();
     }
 
     public boolean userExists(String userName) {
@@ -85,7 +83,6 @@ public class AppUserDataService implements UserDetailsService {
         return savedUser.getId();
     }
 
-    @Transactional
     public void updateUser(EditUserForm form){
         AppUser user = userDataRepository.findById(form.getId()).orElseThrow();
         user.setUsername(form.getUsername());

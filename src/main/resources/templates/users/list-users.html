@@ -16,7 +16,7 @@
 <main class="container">
     <h2 class="mt-4 mb-3">User List</h2>
     <p th:if="${#lists.isEmpty(users)}" class="message">No user accounts yet.</p>
-    <table th:unless="${#lists.isEmpty(users)}" class="ms-4 table table-striped table-bordered w-auto">
+    <table th:unless="${#lists.isEmpty(users)}" class="ms-4 table table-bordered w-auto">
         <thead>
             <tr class="table-primary">
                 <th class="text-center align-middle">Count</th>
@@ -28,35 +28,13 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="u,c:${users}">
+            <tr th:each="u,c:${users}" th:classappend="${#strings.equals(u.username, you)} ? 'table-warning'">
                 <td class="text-center" th:text="${c.count}">1</td>
                 <td class="text-center" th:text="${u.username}">bart</td>
                 <td th:text="${u.firstName}">Bart</td>
                 <td th:text="${u.lastName}">Simpson</td>
                 <td th:text="${u.getPrettyRoleNames()}">ROLE_USER</td>
                 <td><a th:href="@{delete-user(login=${u})}"><i class="me-2 bi bi-trash"></i>Delete</a></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h3 class="mt-4 mb-2 ms-4">Role: Admin</h3>
-    <table class="ms-4 table table-striped table-bordered w-auto">
-        <thead>
-            <tr class="table-primary">
-                <th>Count</th>
-                <th>Username</th>
-                <th>Delete</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="a,c:${admins}">
-                <td th:text="${c.count}">1</td>
-                <td th:text="${a}">marge</td>
-                <td>
-                    <a th:unless="${#strings.equals(a, you)}"
-                       th:href="@{delete-user(login=${a})}"><i class="me-2 bi bi-trash"></i>Delete</a>
-                    <span th:if="${#strings.equals(a, you)}" class="message">You</span>
-                </td>
             </tr>
         </tbody>
     </table>

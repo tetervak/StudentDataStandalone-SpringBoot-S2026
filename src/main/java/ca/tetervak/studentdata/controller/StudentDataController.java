@@ -4,7 +4,6 @@ import ca.tetervak.studentdata.data.entities.Program;
 import ca.tetervak.studentdata.data.entities.Student;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -88,28 +87,28 @@ public class StudentDataController {
             log.trace("insertStudent: the user inputs are correct");
             Student savedStudent = studentDataRepository.save(student);
             log.debug("insertStudent: id = {}", savedStudent.getId());
-            return"redirect:/students/confirm-insert/" + savedStudent.getId();
+            return"redirect:/students/student-added/" + savedStudent.getId();
         }
     }
 
     @PreAuthorize("hasRole('DATA_ADMIN')")
-    @GetMapping("/confirm-insert/{id}")
-    public String confirmInsert(@PathVariable String id, Model model){
-        log.trace("confirmInsert() is called");
-        log.debug("confirmInsert: id = {}", id);
+    @GetMapping("/student-added/{id}")
+    public String studentAdded(@PathVariable String id, Model model){
+        log.trace("studentAdded() is called");
+        log.debug("studentAdded: id = {}", id);
         try {
             log.trace("looking for the data in the database");
             Student student =
                     studentDataRepository.findById(Integer.parseInt(id)).orElseThrow();
-            log.debug("confirmInsert: student = {}", student);
-            log.trace("confirmInsert: showing the data in the confirmation page");
+            log.debug("studentAdded: student = {}", student);
+            log.trace("studentAdded: showing the data in the confirmation page");
             model.addAttribute("student", student);
-            return "students/confirm-insert-student";
+            return "students/student-added";
         } catch (NumberFormatException e) {
             log.trace("the id is not an integer");
             return "data-not-found";
         } catch (NoSuchElementException e){
-            log.trace("confirmInsert: no data for this id = {}", id);
+            log.trace("studentAdded: no data for this id = {}", id);
             return "data-not-found";
         }
     }
