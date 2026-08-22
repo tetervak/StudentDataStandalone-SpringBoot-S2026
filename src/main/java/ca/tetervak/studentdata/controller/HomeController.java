@@ -32,7 +32,7 @@ public class HomeController {
         if(authentication != null && authentication.isAuthenticated()){
             String username = authentication.getName();
             log.debug("index: username = [{}]", username);
-            AppUser user = userDataService.getUserByUsername(username).orElse(null);
+            AppUser user = userDataService.requireUser(username);
             model.addAttribute("user", user);
         }
         return "home/index";

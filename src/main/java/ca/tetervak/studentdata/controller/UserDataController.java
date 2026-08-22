@@ -71,28 +71,34 @@ public class UserDataController {
         if (!bindingResult.hasFieldErrors("currentPassword")) {
             if(userDataService.userExists(user.getUsername())) {
                 bindingResult.rejectValue("username", "username.exists");
-                log.trace("Entered username already exists");
+                log.trace("insertUser: Entered username already exists.");
             }
         }
         if (bindingResult.hasErrors()) {
+            log.trace("insertUser: Input validation errors.");
             model.addAttribute("user", user);
             return "users/add-user";
         }
         AppUser savedUser = userDataService.addUser(user);
-        log.trace("User added");
+        log.trace("insertUser: User added");
         return "redirect:/users/user-added/" + savedUser.getUsername();
     }
 
     @GetMapping("/user-added/{username}")
     public String userAdded(@PathVariable String username, Model model) {
-        AppUser user = userDataService.getUserByUsername(username).orElseThrow();
+        log.trace("userAdded() is called.");
+        log.trace("userAdded: username = {}", username);
+        AppUser user = userDataService.requireUser(username);
         model.addAttribute("user", user);
         return "users/user-added";
     }
 
     @GetMapping("/edit-user")
     public String editUser(@RequestParam String username, Model model) {
+        log.trace("editUser() is called.");
+        log.trace("editUser: username = {}", username);
         EditUserForm form = userDataService.getEditUserFormByUsername(username);
+        log.debug("editUser: form = {}", form);
         model.addAttribute("user", form);
         return "users/edit-user";
     }
@@ -103,6 +109,8 @@ public class UserDataController {
             BindingResult result,
             Model model
     ) {
+        log.trace("updateUser() is called.");
+        log.debug("updateUser: user = {}", user);
         if (result.hasErrors()) {
             model.addAttribute("user", user);
             return "users/edit-user";
@@ -114,9 +122,9 @@ public class UserDataController {
     // an admin clicks "Delete" link in "list-users.html",
     @GetMapping("/delete-user")
     public String deleteUser(@RequestParam String username, Model model) {
-        log.trace("deleteUser() is called");
+        log.trace("deleteUser() is called.");
         log.debug("deleteUser: username = {}", username);
-        AppUser user = userDataService.getUserByUsername(username).orElseThrow();
+        AppUser user = userDataService.requireUser(username);
         model.addAttribute("user", user);
         return "users/delete-user";
     }
@@ -125,6 +133,8 @@ public class UserDataController {
     // the form submits the data to "RemoveUser"
     @PostMapping("/remove-user")
     public String removeUser(@RequestParam String username) {
+        log.trace("removeUser() is called.");
+        log.debug("removeUser: username = {}", username);
         userDataService.removeUser(username);
         return "redirect:/users/list-users";
     }

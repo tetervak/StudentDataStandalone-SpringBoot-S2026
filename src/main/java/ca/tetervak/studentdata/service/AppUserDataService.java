@@ -4,6 +4,7 @@ import ca.tetervak.studentdata.data.entities.AppRole;
 import ca.tetervak.studentdata.data.entities.AppUser;
 import ca.tetervak.studentdata.data.repositories.AppRoleDataRepository;
 import ca.tetervak.studentdata.data.repositories.AppUserDataRepository;
+import ca.tetervak.studentdata.errors.UserNotFoundException;
 import ca.tetervak.studentdata.model.AddUserForm;
 import ca.tetervak.studentdata.model.EditUserForm;
 import org.jspecify.annotations.NonNull;
@@ -62,8 +63,20 @@ public class AppUserDataService implements UserDetailsService {
         return userDataRepository.findByUsername(userName).isPresent();
     }
 
-    public Optional<AppUser> getUserByUsername(String username) {
-        return userDataRepository.findByUsername(username);
+    public AppUser requireUser(String username) {
+        return userDataRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException(username));
+    }
+
+    private AppUser requireUser(Integer id) {
+        return userDataRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(id));
+    }
+
+    private AppRole requireRole(String roleName) {
+        return roleDataRepository.findByRoleName(roleName)
+                .orElseThrow(() -> new IllegalStateException(
+                        "Required role is missing from the database: " + roleName));
     }
 
     public AppUser addUser(@NonNull AddUserForm form) {
@@ -73,15 +86,15 @@ public class AppUserDataService implements UserDetailsService {
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
         if(form.getUserAdmin()){
-            AppRole userAdminRole = roleDataRepository.findByRoleName("USER_ADMIN").orElseThrow();
+            AppRole userAdminRole = requireRole("USER_ADMIN");
             user.getRoles().add(userAdminRole);
         }
         if(form.getDataAdmin()){
-            AppRole dataAdminRole = roleDataRepository.findByRoleName("DATA_ADMIN").orElseThrow();
+            AppRole dataAdminRole = requireRole("DATA_ADMIN");
             user.getRoles().add(dataAdminRole);
         }
         if(form.getDataUser()){
-            AppRole dataUserRole = roleDataRepository.findByRoleName("DATA_USER").orElseThrow();
+            AppRole dataUserRole = requireRole("DATA_USER");
             user.getRoles().add(dataUserRole);
         }
         return userDataRepository.save(user);
@@ -91,19 +104,19 @@ public class AppUserDataService implements UserDetailsService {
         AppUser user = userDataRepository.findById(form.getId()).orElseThrow();
         user.setFirstName(form.getFirstName());
         user.setLastName(form.getLastName());
-        AppRole userAdminRole = roleDataRepository.findByRoleName("USER_ADMIN").orElseThrow();
+        AppRole userAdminRole = requireRole("USER_ADMIN");
         if(form.getUserAdmin()){
             user.getRoles().add(userAdminRole);
         } else {
             user.getRoles().remove(userAdminRole);
         }
-        AppRole dataAdminRole = roleDataRepository.findByRoleName("DATA_ADMIN").orElseThrow();
+        AppRole dataAdminRole = requireRole("DATA_ADMIN");
         if(form.getDataAdmin()){
             user.getRoles().add(dataAdminRole);
         } else {
             user.getRoles().remove(dataAdminRole);
         }
-        AppRole dataUserRole = roleDataRepository.findByRoleName("DATA_USER").orElseThrow();
+        AppRole dataUserRole = requireRole("DATA_USER");
         if(form.getDataUser()){
             user.getRoles().add(dataUserRole);
         } else {
@@ -118,9 +131,9 @@ public class AppUserDataService implements UserDetailsService {
         form.setId(user.getId());
         form.setFirstName(user.getFirstName());
         form.setLastName(user.getLastName());
-        AppRole userAdminRole = roleDataRepository.findByRoleName("USER_ADMIN").orElseThrow();
-        AppRole dataAdminRole = roleDataRepository.findByRoleName("DATA_ADMIN").orElseThrow();
-        AppRole dataUserRole = roleDataRepository.findByRoleName("DATA_USER").orElseThrow();
+        AppRole userAdminRole = requireRole("USER_ADMIN");
+        AppRole dataAdminRole = requireRole("DATA_ADMIN");
+        AppRole dataUserRole = requireRole("DATA_USER");
         form.setUserAdmin(user.getRoles().contains(userAdminRole));
         form.setDataAdmin(user.getRoles().contains(dataAdminRole));
         form.setDataUser(user.getRoles().contains(dataUserRole));
@@ -131,23 +144,18 @@ public class AppUserDataService implements UserDetailsService {
         userDataRepository.deleteByUsername(userName);
     }
 
-    public void updatePassword(String userName, String password) {
-        AppUser user = userDataRepository.findByUsername(userName).orElseThrow();
+    public void updatePassword(String username, String password) {
+        AppUser user = requireUser(username);
         user.setPasswordHash(passwordEncoder.encode(password));
-        userDataRepository.save(user);
     }
 
-    public boolean checkPassword(String userName, String password) {
-        String storedPassword = getPassword(userName);
-        if(storedPassword != null) {
-            return passwordEncoder.matches(password, storedPassword);
-        }else{
-            return false;
-        }
+    public boolean checkPassword(String username, String password) {
+        return userDataRepository.findByUsername(username)
+                .map(user -> passwordEncoder.matches(password, user.getPasswordHash()))
+                .orElse(false);
     }
 
-    public String getPassword(String userName) {
-        AppUser user = userDataRepository.findByUsername(userName).orElseThrow();
-        return user.getPasswordHash();
+    public String getPassword(String username) {
+        return requireUser(username).getPasswordHash();
     }
 }
