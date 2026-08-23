@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <title>Error</title>
+</head>
+<body>
+<header th:replace="~{home/index::header}">
+    <h1>Some header text</h1>
+</header>
+<main class="container">
+    <h2 class="mt-4 mb-3">Error</h2>
+    <div class="alert alert-danger ms-2" role="alert" style="width: 18rem;">
+        <span th:text="|${status} - ${error}|">Error Message.</span>
+    </div>
+    <table class="ms-4 table table-bordered w-auto">
+        <tbody>
+            <tr>
+                <th class="table-primary">Date</th>
+                <td th:text="${timestamp}">Sun Feb 10 11:52:33 EST 2019</td>
+            </tr>
+            <tr>
+                <th class="table-primary">Path</th>
+                <td th:text="${path}">/blah/balh/balh</td>
+            </tr>
+            <tr>
+                <th class="table-primary">Error</th>
+                <td th:text="${error}">Not Found</td>
+            </tr>
+            <tr>
+                <th class="table-primary">Status</th>
+                <td th:text="${status}">404</td>
+            </tr>
+            <tr>
+                <th class="table-primary">Message</th>
+                <td th:text="${message}">No message available</td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="mt-4"><a th:href="@{/index}">Home</a></div>
+</main>
+<footer th:replace="~{home/index::footer}">
+    Some footer text
+</footer>
+</body>
+</html>

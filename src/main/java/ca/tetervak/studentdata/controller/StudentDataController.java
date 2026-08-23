@@ -2,6 +2,7 @@ package ca.tetervak.studentdata.controller;
 
 import ca.tetervak.studentdata.data.entities.Program;
 import ca.tetervak.studentdata.data.entities.Student;
+import ca.tetervak.studentdata.errors.StudentNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -122,20 +123,12 @@ public class StudentDataController {
     }
 
     @GetMapping("/student-details/{id}")
-    public String studentDetails(@PathVariable String id, Model model){
+    public String studentDetails(@PathVariable Integer id, Model model){
         log.trace("studentDetails() is called");
         log.debug("studentDetails: id = {}", id);
-        try {
-            Student student = studentDataRepository.findById(Integer.parseInt(id)).orElseThrow();
-            model.addAttribute("student", student);
-            return "students/student-details"; // show the student data in the form to edit
-        } catch (NumberFormatException e) {
-            log.trace("studentDetails: the id is missing or not an integer");
-            return "data-not-found";
-        } catch (NoSuchElementException e){
-            log.trace("studentDetails: no data for this id={}", id);
-            return "data-not-found";
-        }
+        Student student = studentDataRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+        model.addAttribute("student", student);
+        return "students/student-details"; // show the student data in the form t
     }
 
     // a user clicks "Delete" link (in the table) to "DeleteStudent"

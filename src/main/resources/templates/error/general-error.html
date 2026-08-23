@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/main.css}">
     <title>Error</title>
@@ -13,14 +13,16 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">Error</h2>
-    <ul>
-        <li class="error-message">
-            Exception:
+    <div class="alert alert-danger ms-2" role="alert" style="width: 24rem; font-size: larger">
+        <!--/*@thymesVar id="exception" type="String"*/-->
+        <span class="error">General error.</span>
+    </div>
+    <ul class="ms-2" style="font-size: larger">
+        <li>Exception:
             <!--/*@thymesVar id="exception" type="String"*/-->
             <span th:text="${exception}" class="value">Exception</span>
         </li>
-        <li>
-            Message:
+        <li>Message:
             <!--/*@thymesVar id="message" type="String"*/-->
             <span th:text="${message}" class="value">Message</span>
         </li>

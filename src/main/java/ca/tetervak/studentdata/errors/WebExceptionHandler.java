@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
@@ -20,6 +22,20 @@ public class WebExceptionHandler {
         ModelAndView mav = new ModelAndView("error/error-404");
         mav.addObject("method", ex.getHttpMethod());
         mav.addObject("path", path);
+        return mav;
+    }
+
+    @ExceptionHandler({
+            ResponseStatusException.class,
+            IllegalArgumentException.class,
+            MethodArgumentTypeMismatchException.class
+    })
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ModelAndView handleBadRequest(Exception ex) {
+        log.error(ex.getMessage(), ex);
+        ModelAndView mav = new ModelAndView("error/general-error");
+        mav.addObject("exception", ex.getClass().getSimpleName());
+        mav.addObject("message", ex.getMessage());
         return mav;
     }
 

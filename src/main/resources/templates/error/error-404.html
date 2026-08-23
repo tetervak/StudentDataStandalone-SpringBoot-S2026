@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap-icons/font/bootstrap-icons.css}">
     <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
     <link rel="stylesheet" th:href="@{/css/main.css}">
-    <title>Error</title>
+    <title>Error 404</title>
 </head>
 <body>
 <header th:replace="~{home/index::header}">
@@ -14,11 +14,11 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">Error&nbsp;404</h2>
-    <p class="error-message">
-        The page is not found.
-    </p>
-
-    <ul>
+    <div class="alert alert-danger ms-2" role="alert" style="width: 24rem; font-size: larger">
+        <!--/*@thymesVar id="exception" type="String"*/-->
+        <span class="error">The page is not found.</span>
+    </div>
+    <ul class="ms-2" style="font-size: larger">
         <li>Method:
             <!--/*@thymesVar id="method" type="String"*/-->
             <span th:text="${method}" class="value">Method</span>
