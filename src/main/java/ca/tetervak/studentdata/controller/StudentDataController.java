@@ -3,6 +3,7 @@ package ca.tetervak.studentdata.controller;
 import ca.tetervak.studentdata.data.entities.Program;
 import ca.tetervak.studentdata.data.entities.Student;
 import ca.tetervak.studentdata.errors.StudentNotFoundException;
+import org.jspecify.annotations.NonNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -94,24 +95,19 @@ public class StudentDataController {
 
     @PreAuthorize("hasRole('DATA_ADMIN')")
     @GetMapping("/student-added/{id}")
-    public String studentAdded(@PathVariable String id, Model model){
+    public String studentAdded(@PathVariable int id, Model model){
         log.trace("studentAdded() is called");
         log.debug("studentAdded: id = {}", id);
-        try {
-            log.trace("looking for the data in the database");
-            Student student =
-                    studentDataRepository.findById(Integer.parseInt(id)).orElseThrow();
-            log.debug("studentAdded: student = {}", student);
-            log.trace("studentAdded: showing the data in the confirmation page");
-            model.addAttribute("student", student);
-            return "students/student-added";
-        } catch (NumberFormatException e) {
-            log.trace("the id is not an integer");
-            return "data-not-found";
-        } catch (NoSuchElementException e){
-            log.trace("studentAdded: no data for this id = {}", id);
-            return "data-not-found";
-        }
+        log.trace("looking for the data in the database");
+        Student student = requireStudent(id);
+        log.debug("studentAdded: student = {}", student);
+        log.trace("studentAdded: showing the data in the confirmation page");
+        model.addAttribute("student", student);
+        return "students/student-added";
+    }
+
+    private @NonNull Student requireStudent(int id) {
+        return studentDataRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
     }
 
     @PreAuthorize("hasRole('DATA_ADMIN')")
@@ -123,10 +119,10 @@ public class StudentDataController {
     }
 
     @GetMapping("/student-details/{id}")
-    public String studentDetails(@PathVariable Integer id, Model model){
+    public String studentDetails(@PathVariable int id, Model model){
         log.trace("studentDetails() is called");
         log.debug("studentDetails: id = {}", id);
-        Student student = studentDataRepository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+        Student student = requireStudent(id);
         model.addAttribute("student", student);
         return "students/student-details"; // show the student data in the form t
     }
@@ -134,57 +130,36 @@ public class StudentDataController {
     // a user clicks "Delete" link (in the table) to "DeleteStudent"
     @PreAuthorize("hasRole('DATA_ADMIN')")
     @GetMapping("/delete-student")
-    public String deleteStudent(@RequestParam String id, Model model) {
+    public String deleteStudent(@RequestParam int id, Model model) {
         log.trace("deleteStudent() is called");
         log.debug("deleteStudent: id = {}", id);
-        try {
-            Student student = studentDataRepository.findById(Integer.parseInt(id)).orElseThrow();
-            model.addAttribute("student", student);
-            return "students/delete-student"; // ask, "Do you really want to remove?"
-        } catch (NumberFormatException e) {
-            log.trace("deleteStudent: the id is missing or not an integer");
-            return "data-not-found";
-        } catch (NoSuchElementException e){
-            log.trace("deleteStudent: no data for this id = {}", id);
-            return "data-not-found";
-        }
+        Student student = requireStudent(id);
+        model.addAttribute("student", student);
+        return "students/delete-student"; // ask, "Do you really want to remove?"
     }
 
     // a user clicks "Remove Record" button on "DeleteStudent" page,
     // the form submits the data to "RemoveStudent"
     @PreAuthorize("hasRole('DATA_ADMIN')")
     @PostMapping("/remove-student")
-    public String removeStudent(@RequestParam String id) {
+    public String removeStudent(@RequestParam int id) {
         log.trace("removeStudent() is called");
         log.debug("removeStudent: id = {}", id);
-        try {
-            studentDataRepository.deleteById(Integer.parseInt(id));
-        } catch (NumberFormatException e) {
-            log.trace("removeStudent: the id is missing or not an integer");
-            return "data-not-found";
-        }
+        studentDataRepository.deleteById(id);
         return "redirect:/students/list-students";
     }
 
     // a user clicks "Edit" link (in the table) to "EditStudent"
     @PreAuthorize("hasRole('DATA_ADMIN')")
     @GetMapping("/edit-student")
-    public String editStudent(@RequestParam String id, Model model) {
+    public String editStudent(@RequestParam int id, Model model) {
         log.trace("editStudent() is called");
         log.debug("editStudent: id = {}", id);
-        try {
-            Student student = studentDataRepository.findById(Integer.parseInt(id)).orElseThrow();
-            model.addAttribute("student", student);
-            List<Program> programs = programDataRepository.findAll();
-            model.addAttribute("programs", programs);
-            return "students/edit-student";
-        } catch (NumberFormatException e) {
-            log.trace("editStudent: the id is missing or not an integer");
-            return "data-not-found";
-        } catch (NoSuchElementException e){
-            log.trace("editStudent: no data for this id = {}", id);
-            return "data-not-found";
-        }
+        Student student = requireStudent(id);
+        model.addAttribute("student", student);
+        List<Program> programs = programDataRepository.findAll();
+        model.addAttribute("programs", programs);
+        return "students/edit-student";
     }
 
     // the form submits the data to "UpdateStudent"
