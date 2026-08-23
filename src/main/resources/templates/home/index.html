@@ -34,6 +34,12 @@
 </header>
 <main class="container">
     <h2 class="mt-4 mb-3">Home</h2>
+    <div class="ms-2 mb-3" sec:authorize="isAnonymous()" style="font-style: italic; color: blueviolet">
+        In this demo application, the student data is only pure sample data for the database.<br>
+        It is not real data, and the students from the database are not users of the application.<br>
+        The application user data is not real, as well, and separate from the student data.<br>
+        The demo application is meant to illustrate the use of Spring Security and Spring Data JPA.
+    </div>
     <div sec:authorize="isAuthenticated()"
          class="alert alert-success ms-2" role="alert"
          style="width: 22rem; font-size: larger">
