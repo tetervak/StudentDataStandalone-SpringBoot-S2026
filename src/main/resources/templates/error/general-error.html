@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <script defer th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <link rel="stylesheet" th:href="@{/css/main.css}">
+    <title>Error</title>
+</head>
+<header th:replace="~{home/index::header}">
+    <h1>Some header text</h1>
+</header>
+<main class="container">
+    <h2 class="mt-4 mb-3">Error</h2>
+    <ul>
+        <li class="error-message">
+            Exception:
+            <!--/*@thymesVar id="exception" type="String"*/-->
+            <span th:text="${exception}" class="value">Exception</span>
+        </li>
+        <li>
+            Message:
+            <!--/*@thymesVar id="message" type="String"*/-->
+            <span th:text="${message}" class="value">Message</span>
+        </li>
+    </ul>
+</main>
+<footer th:replace="~{home/index::footer}">
+    Some footer text
+</footer>
+</html>
