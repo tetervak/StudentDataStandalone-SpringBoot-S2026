@@ -1,6 +1,8 @@
 package ca.tetervak.studentdata.data.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,6 +21,8 @@ public class AppRole {
     private Integer id;
 
     @Column(name = "role_name", unique = true, nullable = false)
+    @NotBlank
+    @Size(min = 4, max = 15)
     private String roleName = "";
 
     public String getAuthority() {

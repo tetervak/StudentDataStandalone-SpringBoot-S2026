@@ -15,11 +15,10 @@ public class EditUserForm {
     private Integer id = null;
 
     @NotBlank
-    @Size(max = 30, message = "First name must be no more than 30 characters")
+    @Size(max = 30)
     private String firstName = "";
 
-    @NotBlank
-    @Size(max = 30, message = "Last name must be no more than 30 characters")
+    @Size(min = 2, max = 30)
     private String lastName = "";
 
     @NotNull

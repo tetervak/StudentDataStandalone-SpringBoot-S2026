@@ -14,20 +14,17 @@ import lombok.ToString;
 @ToString
 public class AddUserForm {
 
-    @NotBlank
-    @Size(min = 4, max = 15, message = "Username must be between 4 and 15 characters")
+    @Size(min = 4, max = 15)
     private String username = "";
 
-    @NotBlank
-    @Size(min = 6, message = "Password must be at least 6 characters")
+    @Size(min = 6)
     private String password = "";
 
     @NotBlank
-    @Size(max = 30, message = "First name must be no more than 30 characters")
+    @Size(max = 30)
     private String firstName = "";
 
-    @NotBlank
-    @Size(max = 30, message = "Last name must be no more than 30 characters")
+    @Size(min = 2, max = 30)
     private String lastName = "";
 
     @NotNull

@@ -34,8 +34,7 @@ public class Student {
     private String firstName = "";
 
     @Column(name = "last_name")
-    @NotBlank
-    @Size(max = 30)
+    @Size(min = 2, max = 30)
     private String lastName = "";
 
     @Column(name = "date_of_birth", nullable = false)
